@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+//import Select from 'react-select'
 import { useNavigate, useParams } from "react-router-dom";
 
 import {
@@ -9,28 +10,52 @@ import {
   TextField,
   Typography,
   CircularProgress,
+  MenuItem,
+  Select
 } from "@mui/material";
 
 const UserForm = () => {
   const [user, setUser] = useState({
     usuario: "",
     nombre: "",
-    departamento: "",
+    role:0,
     password: "",
   });
+  const [localValue,setLocalValue]=useState('')
+  const handleChangeSelect = (e) => {
+    console.log(e.target.value)    
+    const value = e.target.value;
+    setLocalValue(value);
+    setUser({
+      ...user,
+      role:e.target.value
+    });
+    console.log(user)
+    
+};
+
   const [loading, setLoading] = useState(false);
   const [editing, setEditing] = useState(false);
-
+  /*const options = [
+    { value: '1', label: 'Manager' },
+    { value: '2', label: 'Inventory' },
+    { value: '3', label: 'Cashier' },
+    { value: '4', label: 'Guard' },
+  ]*/
   const navigate = useNavigate();
   const params = useParams();
 
+  
+
   useEffect(() => {
     if (params.id) {
-      loadTask(params.id);
+      loadUser(params.id);
     }
   }, [params.id]);
 
-  const loadTask = async (id) => {
+  
+
+  const loadUser= async (id) => {
     const res = await fetch("http://localhost:3001/users/" + id);
     const data = await res.json();
     setUser({
@@ -120,20 +145,19 @@ const UserForm = () => {
                 value={user.nombre}
                 inputProps={{ style: { color: "white" } }}
                 InputLabelProps={{ style: { color: "white" } }}
-              />
-              <TextField
-                variant="outlined"
-                label="Area"
-                sx={{
-                  display: "block",
-                  margin: ".5rem 0",
-                }}
-                name="departamento"
-                onChange={handleChange}
-                value={user.departamento}
-                inputProps={{ style: { color: "white" } }}
-                InputLabelProps={{ style: { color: "white" } }}
-              />
+              />          
+                <Select                
+                name="Role"
+                label="Role"
+                value={localValue}     
+                onChange={handleChangeSelect}
+             >
+                
+              <MenuItem key={1} value={1}>1</MenuItem>
+              <MenuItem key={2} value={2}>2</MenuItem>
+              <MenuItem key={3} value={3}>3</MenuItem>
+              </Select>
+              
               <TextField
                 variant="outlined"
                 label="Password"

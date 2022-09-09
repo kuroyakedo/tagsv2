@@ -33,13 +33,21 @@ CREATE TABLE usuarios(
   id serial PRIMARY KEY,
   usuario varchar  unique,
   nombre varchar ,
-  departamento int,
+  rol int,
   createdAt timestamp NOT NULL DEFAULT NOW(),
   password varchar
 );
+
+CREATE TABLE roles(
+  id serial PRIMARY KEY,
+  rol varchar unique
+)
+ALTER TABLE usuarios ADD FOREIGN KEY (rol) REFERENCES roles (id);
 
 
 ALTER TABLE inventario ADD FOREIGN KEY (idCatalogo) REFERENCES catalogo (id);
 
 ALTER TABLE codigos ADD FOREIGN KEY (estado) REFERENCES estados (id);
+
+
 

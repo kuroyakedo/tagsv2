@@ -3,16 +3,17 @@ const pool = require("../db");
 const epcTds = require("epc-tds");
 
 const getAllUsers = async (req, res, next) => {
-  /* try {
+  try {
     const result = await pool.query(
-      "SELECT id,nombre,departamento,usuario FROM usuarios"
+      "SELECT id,nombre,rol,usuario FROM usuarios"
     );
     res.json(result.rows);
   } catch (err) {
     //res.json({ error: err.message });
     next(err);
-  }*/
-  let epc = epcTds.valueOf("30342CB3E4103349EC246836"); // sgtin-96
+    console.log(err)
+  }
+  /*let epc = epcTds.valueOf("30342CB3E4103349EC246836"); // sgtin-96
   // Acces to epc properties
   console.log("Type--: " + epc.getType()); // TDS ID
   console.log("Filter: " + epc.getFilter()); // filter index
@@ -26,18 +27,18 @@ const getAllUsers = async (req, res, next) => {
   // Decode from Hex Tag URI
   epc = epcTds.fromTagURI("urn:epc:tag:sgtin-96:3.0614141.812345.6789");
   console.log("HexEPC: " + epc.toHexString()); // HEX EPC
-  console.log("Tag URI: " + epc.toTagURI());
+  console.log("Tag URI: " + epc.toTagURI());*/
 };
 
 const getUser = async (req, res, next) => {
   try {
     const { id } = req.params;
     const result = await pool.query(
-      "SELECT id,nombre,departamento,usuario FROM usuarios WHERE id=$1",
+      "SELECT id,nombre,rol,usuario FROM usuarios WHERE id=$1",
       [id]
     );
     if (result.rows.length === 0)
-      return res.status(404).json({ message: "Task not found" });
+      return res.status(404).json({ message: "User not found" });
     res.json(result.rows[0]);
   } catch (err) {
     next(err);
@@ -45,16 +46,17 @@ const getUser = async (req, res, next) => {
 };
 
 const createUser = async (req, res, next) => {
-  const { usuario, password, nombre, departamento } = req.body;
+  const { usuario, password, nombre, rol } = req.body;
   try {
     const result = await pool.query(
-      "INSERT INTO usuarios(nombre,departamento,usuario,password)VALUES ($1,$2,$3,$4) RETURNING *",
-      [nombre, departamento, usuario, password]
+      "INSERT INTO usuarios(nombre,rol,usuario,password)VALUES ($1,$2,$3,$4) RETURNING *",
+      [nombre, rol, usuario, password]
     );
     res.json(result.rows[0]);
   } catch (err) {
     //res.json({ error: err.message });
     next(err);
+    console.log(err)
   }
 };
 
@@ -75,11 +77,11 @@ const deleteUser = async (req, res, next) => {
 
 const modifyUser = async (req, res, next) => {
   const { id } = req.params;
-  const { usuario, password, nombre, departamento } = req.body;
+  const { usuario, password, nombre, rol } = req.body;
   try {
     const result = await pool.query(
-      "UPDATE usuarios SET nombre=$1,departamento=$2,usuario=$3,password=$4 WHERE id=$5 RETURNING *",
-      [nombre, departamento, usuario, password, id]
+      "UPDATE usuarios SET nombre=$1,rol=$2,usuario=$3,password=$4 WHERE id=$5 RETURNING *",
+      [nombre, rol, usuario, password, id]
     );
     res.json(result.rows[0]);
   } catch (err) {
