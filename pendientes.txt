@@ -1,0 +1,19 @@
+INVENTARIO
+[]Leer código
+[]Decodificar UPC
+[]Buscar ID del UPC
+[]Incrementar el inventario
+
+CAJA
+[]Leer código
+[]Decodificar UPC
+[]Buscar ID del UPC
+[]Descontar de inventario
+[]Registrar RFIDs Vendidos
+
+PUERTA
+[]Leer RFIDs
+[]Verificar estado
+--[]si esta vendido no pasa nada
+--[]si no está en la lista de ventas mostrar en pantalla el producto
+

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 // import DeleteModal from "./DeleteModal";
 import { useNavigate } from "react-router-dom";
-import { Button, Card, CardContent, Typography } from "@mui/material";
+import { Button, Card, CardContent, Typography, Stack } from "@mui/material";
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
@@ -30,7 +30,22 @@ const UserList = () => {
 
   return (
     <>
-      <h1>Users</h1>
+      <Stack
+        direction="row"
+        justifyContent="space-between"
+        alignItems="flex-end"
+        spacing={12}
+      >
+        <h1>Users</h1>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => navigate("/newUser")}
+        >
+          New user
+        </Button>
+      </Stack>
+
       {users.map((u) => (
         <Card
           key={u.id}

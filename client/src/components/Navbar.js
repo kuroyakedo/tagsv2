@@ -21,13 +21,6 @@ export default function ButtonAppBar() {
                 READERS
               </Link>
             </Typography>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => navigate("/new")}
-            >
-              New user
-            </Button>
           </Toolbar>
         </Container>
       </AppBar>

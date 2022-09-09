@@ -11,61 +11,57 @@ import {
   Typography,
   CircularProgress,
   MenuItem,
-  Select
+  Select,
+  InputLabel,
+  FormControl,
 } from "@mui/material";
 
 const UserForm = () => {
   const [user, setUser] = useState({
     usuario: "",
     nombre: "",
-    role:0,
+    role: "1",
     password: "",
   });
-  const [localValue,setLocalValue]=useState('')
+  const [localValue, setLocalValue] = useState("");
   const handleChangeSelect = (e) => {
-    console.log(e.target.value)    
     const value = e.target.value;
     setLocalValue(value);
     setUser({
       ...user,
-      role:e.target.value
+      role: e.target.value,
     });
-    console.log(user)
-    
-};
-
+    console.log(user);
+  };
   const [loading, setLoading] = useState(false);
   const [editing, setEditing] = useState(false);
   /*const options = [
-    { value: '1', label: 'Manager' },
-    { value: '2', label: 'Inventory' },
-    { value: '3', label: 'Cashier' },
-    { value: '4', label: 'Guard' },
-  ]*/
+    { value: "1", label: "Manager" },
+    { value: "2", label: "Inventory" },
+    { value: "3", label: "Cashier" },
+    { value: "4", label: "Guard" },
+  ];*/
   const navigate = useNavigate();
   const params = useParams();
 
-  
-
-  useEffect(() => {
-    if (params.id) {
-      loadUser(params.id);
-    }
-  }, [params.id]);
-
-  
-
-  const loadUser= async (id) => {
+  const loadUser = async (id) => {
     const res = await fetch("http://localhost:3001/users/" + id);
     const data = await res.json();
     setUser({
       usuario: data.usuario,
       nombre: data.nombre,
-      departamento: data.departamento,
+      role: data.role,
       password: data.password,
     });
+    console.log(data);
     setEditing(true);
+    setLocalValue(user.role);
   };
+  useEffect(() => {
+    if (params.id) {
+      loadUser(params.id);
+    }
+  }, [params.id]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -91,14 +87,16 @@ const UserForm = () => {
       }
 
       setLoading(false);
-      navigate("/");
+      navigate("/users");
     } catch (error) {
       console.error(error);
     }
   };
 
-  const handleChange = (e) =>
+  const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
+    console.log(user);
+  };
 
   return (
     <Grid
@@ -145,19 +143,52 @@ const UserForm = () => {
                 value={user.nombre}
                 inputProps={{ style: { color: "white" } }}
                 InputLabelProps={{ style: { color: "white" } }}
-              />          
-                <Select                
-                name="Role"
-                label="Role"
-                value={localValue}     
-                onChange={handleChangeSelect}
-             >
-                
-              <MenuItem key={1} value={1}>1</MenuItem>
-              <MenuItem key={2} value={2}>2</MenuItem>
-              <MenuItem key={3} value={3}>3</MenuItem>
-              </Select>
-              
+              />
+              <FormControl
+                sx={{
+                  display: "block",
+                  margin: ".5rem 0",
+                  color: "white",
+                }}
+              >
+                <InputLabel
+                  id="test-select-label"
+                  sx={{
+                    display: "block",
+                    margin: ".5rem 0",
+                    color: "white",
+                  }}
+                >
+                  Role
+                </InputLabel>
+                <Select
+                  name="Role"
+                  label="Role"
+                  value={localValue}
+                  onChange={handleChangeSelect}
+                  sx={{
+                    display: "block",
+                    margin: ".5rem 0",
+                    color: "white",
+                  }}
+                  SelectProps={{
+                    renderValue: (value) => localValue,
+                  }}
+                >
+                  <MenuItem key={"1"} value={"1"}>
+                    Manager
+                  </MenuItem>
+                  <MenuItem key={"2"} value={"2"}>
+                    Inventory
+                  </MenuItem>
+                  <MenuItem key={"3"} value={"3"}>
+                    Cashier
+                  </MenuItem>
+                  <MenuItem key={"4"} value={"4"}>
+                    Guard
+                  </MenuItem>
+                </Select>
+              </FormControl>
               <TextField
                 variant="outlined"
                 label="Password"
@@ -165,6 +196,7 @@ const UserForm = () => {
                   display: "block",
                   margin: ".5rem 0",
                 }}
+                type="password"
                 name="password"
                 onChange={handleChange}
                 value={user.password}
@@ -177,10 +209,7 @@ const UserForm = () => {
                 variant="contained"
                 color="primary"
                 disabled={
-                  !user.usuario ||
-                  !user.nombre ||
-                  !user.departamento ||
-                  !user.password
+                  !user.usuario || !user.nombre || !user.role || !user.password
                 }
               >
                 {loading ? (
