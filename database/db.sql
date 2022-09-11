@@ -13,7 +13,7 @@ CREATE TABLE inventario (
   id SERIAL PRIMARY KEY,
   total int,
   createdAt timestamp NOT NULL DEFAULT NOW(),
-  idCatalogo int
+  idCatalogo int INTEGER REFERENCES catalogo (id) ON DELETE CASCADE,
 );
 
 CREATE TABLE codigos (
@@ -21,7 +21,7 @@ CREATE TABLE codigos (
   rfid varchar  unique,
   estado int,
   createdAt timestamp  NOT NULL DEFAULT NOW(),
-  idCatalogo int
+  idCatalogo int INTEGER REFERENCES catalogo (id) ON DELETE CASCADE,
 );
 
 CREATE TABLE estados (
@@ -43,9 +43,6 @@ CREATE TABLE roles(
   rol varchar unique
 )
 ALTER TABLE usuarios ADD FOREIGN KEY (rol) REFERENCES roles (id);
-
-
-ALTER TABLE inventario ADD FOREIGN KEY (idCatalogo) REFERENCES catalogo (id);
 
 ALTER TABLE codigos ADD FOREIGN KEY (estado) REFERENCES estados (id);
 

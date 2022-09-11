@@ -1,18 +1,15 @@
 const { nextTick } = require("process");
 const pool = require("../db");
-var CryptoJS = require("crypto-js");
-var AES = require("crypto-js/aes");
-var SHA256 = require("crypto-js/sha256");
+const epcTds = require('epc-tds');
 
+//30342E120C10529AC688C393
 const addInventory = async (req, res, next) => {
-  const { id } = req.params;
-  let epc = epcTds.valueOf(id);
-  const upc = epc.getGtin().toString();
-  console.log(epc, upc);
+  const { rfid } = req.body;
+  let upc=epcTds.valueOf(rfid);
   try {
     const result = await pool.query(
-      "UPDATE inventario AS i SET i.total=i.total+1 FROM catalogo c WHERE c.upc=$1 AND i.idcatalogo=c.id",
-      [upc]
+      "UPDATE inventario AS i SET total=total+1 FROM catalogo AS c WHERE c.upc=$1 AND i.idcatalogo=c.id",
+      [upc.getGtin()]
     );
     res.json(result.rows[0]);
   } catch (err) {
@@ -21,9 +18,7 @@ const addInventory = async (req, res, next) => {
   }
 };
 
-module.exports = {
-  addInventory,
-};
+module.exports =  addInventory;
 /*let epc = epcTds.valueOf("30342CB3E4103349EC246836"); // sgtin-96
   // Acces to epc properties
   console.log("Type--: " + epc.getType()); // TDS ID

@@ -29,11 +29,22 @@ const createItem = async (req, res, next) => {
     const result = await pool.query(
       "INSERT INTO catalogo(nombre,upc,costo,descripcion)VALUES ($1,$2,$3,$4) RETURNING *",
       [nombre, upc, costo, descripcion]
-    );
+    );   
+    const r = await createItemInventory(result.rows[0].id);
     res.json(result.rows[0]);
   } catch (err) {
     //res.json({ error: err.message });
     next(err);
+    console.log(err);
+  }
+};
+
+const createItemInventory = async (id) => {  
+  try {
+    const result = await pool.query(
+      "INSERT INTO inventario(total,idcatalogo)	VALUES (0,$1)",[id]      
+    );
+  } catch (err) {
     console.log(err);
   }
 };

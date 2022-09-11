@@ -10,15 +10,18 @@ import {
 //30342CB3E4103349EC246836
 //30342E120C10529AC688C393
 const InventoryForm = () => {
-  const [codigo, setCodigo] = useState();
+  const [codigo, setCodigo] = useState({
+    rfid:""
+  });
   const handleChange = (e) => {
-    setCodigo(e.target.value);
+    setCodigo(
+      {...codigo,rfid:e.target.value});
   };
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (event) => {
     /*const result = await fetch(
       `https://rfidcoder.gs1.org/api/tag/epc/${rfid}?apikey=${process.env.API_KEY}/`
     );*/
-    const response = await fetch("http://localhost:3001/inventory/" + codigo, {
+    const response = await fetch("http://localhost:3001/inventory", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(codigo),
@@ -45,7 +48,7 @@ const InventoryForm = () => {
             Inventory
           </Typography>
           <CardContent>
-            <form>
+            <form onSubmit={handleSubmit}>
               <TextField
                 label="Codigo"
                 sx={{
@@ -53,7 +56,7 @@ const InventoryForm = () => {
                   margin: ".5rem 0",
                 }}
                 name="codigo"
-                value={codigo}
+                value={codigo.rfid}
                 onChange={handleChange}
                 inputProps={{ style: { color: "white" } }}
                 InputLabelProps={{ style: { color: "white" } }}
@@ -62,8 +65,7 @@ const InventoryForm = () => {
                 type="submit"
                 variant="contained"
                 color="primary"
-                disabled={!codigo}
-                onClick={handleSubmit}
+                disabled={!codigo}                
               >
                 Save
               </Button>

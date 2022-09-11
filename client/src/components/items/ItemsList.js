@@ -15,7 +15,7 @@ const ItemsList = () => {
 
   const handleDelete = async (id) => {
     try {
-      await fetch(`http://localhost:4000/items/${id}`, {
+      await fetch(`http://localhost:3001/items/${id}`, {
         method: "DELETE",
       });
       setItems(items.filter((item) => item.id !== id));

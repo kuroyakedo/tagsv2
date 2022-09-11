@@ -1,8 +1,8 @@
 INVENTARIO
-[]Leer código
-[]Decodificar UPC
-[]Buscar ID del UPC
-[]Incrementar el inventario
+[x]Leer código
+[x]Decodificar UPC
+[x]Buscar ID del UPC
+[x]Incrementar el inventario
 
 CAJA
 []Leer código
