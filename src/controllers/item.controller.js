@@ -23,13 +23,24 @@ const getItem = async (req, res, next) => {
   }
 };
 
+const getItemUpc = async (upc) => {
+  try {
+    const result = await pool.query("SELECT * FROM catalogo WHERE upc=$1", [
+      upc,
+    ]);
+    if (result.rows.length !== 0) return result.rows[0];
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 const createItem = async (req, res, next) => {
   const { nombre, upc, costo, descripcion } = req.body;
   try {
     const result = await pool.query(
       "INSERT INTO catalogo(nombre,upc,costo,descripcion)VALUES ($1,$2,$3,$4) RETURNING *",
       [nombre, upc, costo, descripcion]
-    );   
+    );
     const r = await createItemInventory(result.rows[0].id);
     res.json(result.rows[0]);
   } catch (err) {
@@ -39,10 +50,11 @@ const createItem = async (req, res, next) => {
   }
 };
 
-const createItemInventory = async (id) => {  
+const createItemInventory = async (id) => {
   try {
     const result = await pool.query(
-      "INSERT INTO inventario(total,idcatalogo)	VALUES (0,$1)",[id]      
+      "INSERT INTO inventario(total,idcatalogo)	VALUES (0,$1)",
+      [id]
     );
   } catch (err) {
     console.log(err);
@@ -81,6 +93,7 @@ const modifyItem = async (req, res, next) => {
 module.exports = {
   getAllItems,
   getItem,
+  getItemUpc,
   createItem,
   deleteItem,
   modifyItem,
