@@ -5,15 +5,15 @@ INVENTARIO
 [x]Incrementar el inventario
 
 CAJA
-[]Leer código
-[]Decodificar UPC
-[]Buscar ID del UPC
-[]Descontar de inventario
-[]Registrar RFIDs Vendidos
+[x]Leer código
+[x]Decodificar UPC
+[x]Buscar ID del UPC
+[x]Descontar de inventario
+[x]Registrar RFIDs Vendidos
 
 PUERTA
-[]Leer RFIDs
-[]Verificar estado
---[]si esta vendido no pasa nada
+[x]Leer RFIDs
+[x]Verificar estado
+--[x]si esta vendido no pasa nada
 --[]si no está en la lista de ventas mostrar en pantalla el producto
 

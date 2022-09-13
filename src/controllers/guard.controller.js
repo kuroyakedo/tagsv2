@@ -11,9 +11,11 @@ const guard = async (req, res, next) => {
     const result = await pool.query("SELECT id FROM codigos WHERE rfid=$1", [
       rfid,
     ]);
-    //upc.getGtin()
-    if (!result.rows[0]) getItemUpc(upc.getGtin());
-    res.json(null);
+    
+    //if (result.rows.length === 0)
+    res.redirect('/items');
+ 
+    //res.json(result.rows[0]);
   } catch (err) {
     next(err);
     console.log(err);
