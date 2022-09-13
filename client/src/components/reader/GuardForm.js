@@ -25,8 +25,9 @@ const GuardForm = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(codigo),
     });
+
     await response.json();
-    console.log(response.json());
+
     //
     /*if (response) {
       navigate("/ErrorGuard");

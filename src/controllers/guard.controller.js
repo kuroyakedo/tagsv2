@@ -11,11 +11,7 @@ const guard = async (req, res, next) => {
     const result = await pool.query("SELECT id FROM codigos WHERE rfid=$1", [
       rfid,
     ]);
-    
-    //if (result.rows.length === 0)
-    res.redirect('/items');
- 
-    //res.json(result.rows[0]);
+    res.json(result.rows[0]);
   } catch (err) {
     next(err);
     console.log(err);
