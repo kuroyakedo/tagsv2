@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+//import { useNavigate } from "react-router-dom";
 import {
   Button,
   Card,
@@ -6,14 +7,6 @@ import {
   Grid,
   TextField,
   Typography,
-  Dialog,
-  ListItem,
-  List,
-  ListItemText,
-  Divider,
-  AppBar,
-  Toolbar,
-  IconButton,
 } from "@mui/material";
 //30342CB3E4103349EC246836
 //30342E120C10529AC688C393
@@ -21,36 +14,24 @@ const GuardForm = () => {
   const [codigo, setCodigo] = useState({
     rfid: "",
   });
+
   const handleChange = (e) => {
     setCodigo({ ...codigo, rfid: e.target.value });
   };
-  const [open, setOpen] = React.useState(false);
-
-  /*const handleClickOpen = () => {
-    setOpen(true);
-  };*/
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const handleSubmit = async (event) => {
-    /*const result = await fetch(
-      `https://rfidcoder.gs1.org/api/tag/epc/${rfid}?apikey=${process.env.API_KEY}/`
-    );*/
     const response = await fetch("http://localhost:3001/guard", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(codigo),
     });
-    if (response) {
-      setOpen(true);
-      event.preventDefault();
-    } else {
-      await response.json();
-    }
+    await response.json();
+    console.log(response.json());
+    //
+    /*if (response) {
+      navigate("/ErrorGuard");
+    } */
   };
-  //GS1.GTIN ES EL UPC
   return (
     <Grid
       container
@@ -92,43 +73,6 @@ const GuardForm = () => {
                 Save
               </Button>
             </form>
-
-            <Dialog fullScreen open={open} onClose={handleClose}>
-              <AppBar sx={{ position: "relative" }}>
-                <Toolbar>
-                  <IconButton
-                    edge="start"
-                    color="inherit"
-                    onClick={handleClose}
-                    aria-label="close"
-                  >
-                    X
-                  </IconButton>
-                  <Typography
-                    sx={{ ml: 2, flex: 1 }}
-                    variant="h6"
-                    component="div"
-                  >
-                    Sound
-                  </Typography>
-                  <Button autoFocus color="inherit" onClick={handleClose}>
-                    save
-                  </Button>
-                </Toolbar>
-              </AppBar>
-              <List>
-                <ListItem button>
-                  <ListItemText primary="Phone ringtone" secondary="Titania" />
-                </ListItem>
-                <Divider />
-                <ListItem button>
-                  <ListItemText
-                    primary="Default notification ringtone"
-                    secondary="Tethys"
-                  />
-                </ListItem>
-              </List>
-            </Dialog>
           </CardContent>
         </Card>
       </Grid>
