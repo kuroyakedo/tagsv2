@@ -5,7 +5,7 @@ const {
   createItem,
   deleteItem,
   modifyItem,
-  itemsRfid
+  itemsRfid,
 } = require("../controllers/item.controller");
 
 const router = Router();
@@ -19,6 +19,7 @@ router.post("/items", createItem);
 router.delete("/items/:id", deleteItem);
 
 router.put("/items/:id", modifyItem);
-router.put("/itemsRfid/:id", itemsRfid);
+
+router.get("/itemsRfid/:id", itemsRfid);
 
 module.exports = router;

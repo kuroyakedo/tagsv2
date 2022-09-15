@@ -4,17 +4,15 @@ const epcTds = require("epc-tds");
 const { getItemUpc } = require("./item.controller");
 
 //30342E120C10529AC688C393
-const guard = async (req, res, next) => {  
+const guard = async (req, res, next) => {
   try {
     const { id } = req.params;
-    console.log(id)
-    let upc = epcTds.valueOf(id);    
+    let upc = epcTds.valueOf(id);
     const result = await pool.query("SELECT id FROM codigos WHERE rfid=$1", [
       id,
     ]);
-    console.log(result.rows[0])
     if (result.rows.length === 0)
-      return res.status(404).json({ message: "Item not found" });
+      return res.json({ message: "Item not found" });
     res.json(result.rows[0]);
   } catch (err) {
     next(err);
