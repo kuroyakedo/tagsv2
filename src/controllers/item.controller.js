@@ -1,6 +1,8 @@
 const { nextTick } = require("process");
 const pool = require("../db");
 
+const epcTds = require("epc-tds");
+
 const getAllItems = async (req, res, next) => {
   try {
     const result = await pool.query("SELECT * FROM catalogo");
@@ -13,7 +15,7 @@ const getAllItems = async (req, res, next) => {
 
 const getItem = async (req, res, next) => {
   try {
-    const { id } = req.params;
+    const { id } = req.params;    
     const result = await pool.query("SELECT * FROM catalogo WHERE id=$1", [id]);
     if (result.rows.length === 0)
       return res.status(404).json({ message: "Item not found" });
@@ -89,6 +91,21 @@ const modifyItem = async (req, res, next) => {
     next(err);
   }
 };
+const itemsRfid = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    let upc = epcTds.valueOf(id);
+    const result = await pool.query(
+      "SELECT * FROM items WHERE upc=$1",[upc]
+    );
+    console.log(result.row[0])
+    res.json(result.rows[0]);
+  } catch (err) {
+    next(err);
+  }
+};
+
+
 
 module.exports = {
   getAllItems,
@@ -97,4 +114,5 @@ module.exports = {
   createItem,
   deleteItem,
   modifyItem,
+  itemsRfid
 };
