@@ -110,6 +110,7 @@ const itemsRfid = async (req, res, next) => {
   }
 };
 
+
 module.exports = {
   getAllItems,
   getItem,
@@ -117,5 +118,5 @@ module.exports = {
   createItem,
   deleteItem,
   modifyItem,
-  itemsRfid,
+  itemsRfid
 };

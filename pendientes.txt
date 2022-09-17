@@ -1,8 +1,18 @@
+CATALOGO
+[x]Subir imagen del item
+[]Eliminar foto al editar
+[]Mostrar miniatura de imagen en lista
+
+USUARIOS
+[]Cargo seleccionado en edición
+
 INVENTARIO
 [x]Leer código
 [x]Decodificar UPC
 [x]Buscar ID del UPC
 [x]Incrementar el inventario
+[]Mostrar tabla de lo agregado
+[]Imagen de los items
 
 CAJA
 [x]Leer código
@@ -10,10 +20,13 @@ CAJA
 [x]Buscar ID del UPC
 [x]Descontar de inventario
 [x]Registrar RFIDs Vendidos
+[]Mostrar tabla de lo agregado
+[]Imagen de los items
 
 PUERTA
 [x]Leer RFIDs
 [x]Verificar estado
 --[x]si esta vendido no pasa nada
---[]si no está en la lista de ventas mostrar en pantalla el producto
+--[x]si no está en la lista de ventas mostrar en pantalla el producto
+--[]Mostrar imagen en caso de robo
 

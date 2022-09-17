@@ -16,7 +16,7 @@ const ItemForm = () => {
     upc: "",
     costo: 0,
     descripcion: "",
-  });
+  });  
   const [loading, setLoading] = useState(false);
   const [editing, setEditing] = useState(false);
   const navigate = useNavigate();
@@ -40,8 +40,7 @@ const ItemForm = () => {
     setEditing(true);
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleSubmit = async (event) => {    
     setLoading(true);
     try {
       if (editing) {
@@ -60,7 +59,9 @@ const ItemForm = () => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(item),
         });
-        await response.json();
+        const data=await response.json();
+        sendHandler(data.id)
+
       }
       setLoading(false);
       navigate("/items");
@@ -71,6 +72,41 @@ const ItemForm = () => {
 
   const handleChange = (e) =>
     setItem({ ...item, [e.target.name]: e.target.value });
+
+/*************************************************************************** */
+/*************************************************************************** */
+const [file, setFile] = useState(null)
+
+  const selectedHandler = e => {
+    setFile(e.target.files[0])
+  }
+
+  const sendHandler = (id) => {
+    if(!file){
+      //alert('you must upload file')
+      return
+    }
+
+    const formdata = new FormData();
+    formdata.append('image', file);
+    //formdata.append('id', id)
+    console.log(file);
+    fetch('http://localhost:3001/itemImage/'+id, {
+      method: 'PUT',
+      body: formdata
+    })
+    .then(res => res.text())
+    .then(res => console.log(res))
+    .catch(err => {
+      console.error(err)
+    })
+    document.getElementById('fileinput').value = null
+
+    setFile(null)
+  }
+
+
+
 
   return (
     <Grid
@@ -91,7 +127,7 @@ const ItemForm = () => {
             {editing ? "Update Item" : "Create Item"}
           </Typography>
           <CardContent>
-            <form onSubmit={handleSubmit}>
+            
               <TextField
                 variant="outlined"
                 label="Name"
@@ -145,6 +181,16 @@ const ItemForm = () => {
                 inputProps={{ style: { color: "white" } }}
                 InputLabelProps={{ style: { color: "white" } }}
               />
+             
+
+             <div>
+             <div className="col-10">
+              <input id="fileinput" onChange={selectedHandler} className="form-control" type="file"/>
+            </div>
+            <img src="/home/kuroyakedo/Documents/projects/tagsv2/src/images/1663381830260-item-708887.jpg" alt="trying" width={200}height={200} />
+             </div>
+
+
 
               <Button
                 type="submit"
@@ -153,6 +199,7 @@ const ItemForm = () => {
                 disabled={
                   !item.nombre || !item.upc || !item.costo || !item.descripcion
                 }
+                onClick={handleSubmit}
               >
                 {loading ? (
                   <CircularProgress color="inherit" size={25} />
@@ -160,7 +207,7 @@ const ItemForm = () => {
                   "Save"
                 )}
               </Button>
-            </form>
+            
           </CardContent>
         </Card>
       </Grid>
