@@ -8,6 +8,7 @@ const itemsRoutes = require("./routes/items.routes");
 const inventoryRoutes = require("./routes/inventory.routes");
 const cashierRoutes = require("./routes/cashier.routes");
 const guardRoutes = require("./routes/guard.routes");
+const path = require("path");
 
 app.use(cors());
 app.use(morgan("dev"));
@@ -18,6 +19,8 @@ app.use(itemsRoutes);
 app.use(inventoryRoutes);
 app.use(cashierRoutes);
 app.use(guardRoutes);
+
+app.use(express.static(path.join(__dirname, "images")));
 
 app.use((err, req, res, next) => {
   return res.json({ message: "Error!" });

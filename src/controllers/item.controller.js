@@ -6,6 +6,7 @@ const epcTds = require("epc-tds");
 const getAllItems = async (req, res, next) => {
   try {
     const result = await pool.query("SELECT * FROM catalogo");
+    console.log(result.rows);
     res.json(result.rows);
   } catch (err) {
     next(err);
@@ -110,7 +111,6 @@ const itemsRfid = async (req, res, next) => {
   }
 };
 
-
 module.exports = {
   getAllItems,
   getItem,
@@ -118,5 +118,5 @@ module.exports = {
   createItem,
   deleteItem,
   modifyItem,
-  itemsRfid
+  itemsRfid,
 };

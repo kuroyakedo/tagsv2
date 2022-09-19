@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { Button, Card, CardContent, Typography, Stack } from "@mui/material";
 
 const ItemsList = () => {
+  //const host_name = process.env.REACT_APP_HOST;
+  //const port = process.env.REACT_APP_PORT;
   const [items, setItems] = useState([]);
   const navigate = useNavigate();
 
@@ -67,6 +69,14 @@ const ItemsList = () => {
             >
               <Typography>{i.nombre}</Typography>
               <Typography>{i.descripcion}</Typography>
+              <Typography>
+                <img
+                  src={"http://localhost:3001/" + i.rutaimagen}
+                  alt="TEST"
+                  width="500"
+                  height="400"
+                ></img>
+              </Typography>
             </div>
             <div>
               <Button

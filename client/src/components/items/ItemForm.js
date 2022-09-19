@@ -16,7 +16,7 @@ const ItemForm = () => {
     upc: "",
     costo: 0,
     descripcion: "",
-  });  
+  });
   const [loading, setLoading] = useState(false);
   const [editing, setEditing] = useState(false);
   const navigate = useNavigate();
@@ -40,7 +40,7 @@ const ItemForm = () => {
     setEditing(true);
   };
 
-  const handleSubmit = async (event) => {    
+  const handleSubmit = async (event) => {
     setLoading(true);
     try {
       if (editing) {
@@ -52,16 +52,16 @@ const ItemForm = () => {
             body: JSON.stringify(item),
           }
         );
-        await response.json();
+        const data = await response.json();
+        sendHandler(data.id);
       } else {
         const response = await fetch("http://localhost:3001/items", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(item),
         });
-        const data=await response.json();
-        sendHandler(data.id)
-
+        const data = await response.json();
+        sendHandler(data.id);
       }
       setLoading(false);
       navigate("/items");
@@ -73,40 +73,33 @@ const ItemForm = () => {
   const handleChange = (e) =>
     setItem({ ...item, [e.target.name]: e.target.value });
 
-/*************************************************************************** */
-/*************************************************************************** */
-const [file, setFile] = useState(null)
+  /*************************************************************************** */
+  /*************************************************************************** */
+  const [file, setFile] = useState(null);
 
-  const selectedHandler = e => {
-    setFile(e.target.files[0])
-  }
+  const selectedHandler = (e) => {
+    setFile(e.target.files[0]);
+  };
 
   const sendHandler = (id) => {
-    if(!file){
-      //alert('you must upload file')
-      return
+    if (file) {
+      const formdata = new FormData();
+      formdata.append("image", file);
+      //formdata.append('id', id)
+      console.log(file);
+      fetch("http://localhost:3001/itemImage/" + id, {
+        method: "PUT",
+        body: formdata,
+      })
+        .then((res) => res.text())
+        .then((res) => console.log(res))
+        .catch((err) => {
+          console.error(err);
+        });
+      document.getElementById("fileinput").value = null;
+      setFile(null);
     }
-
-    const formdata = new FormData();
-    formdata.append('image', file);
-    //formdata.append('id', id)
-    console.log(file);
-    fetch('http://localhost:3001/itemImage/'+id, {
-      method: 'PUT',
-      body: formdata
-    })
-    .then(res => res.text())
-    .then(res => console.log(res))
-    .catch(err => {
-      console.error(err)
-    })
-    document.getElementById('fileinput').value = null
-
-    setFile(null)
-  }
-
-
-
+  };
 
   return (
     <Grid
@@ -127,87 +120,92 @@ const [file, setFile] = useState(null)
             {editing ? "Update Item" : "Create Item"}
           </Typography>
           <CardContent>
-            
-              <TextField
-                variant="outlined"
-                label="Name"
-                sx={{
-                  display: "block",
-                  margin: ".5rem 0",
-                }}
-                name="nombre"
-                onChange={handleChange}
-                value={item.nombre}
-                inputProps={{ style: { color: "white" } }}
-                InputLabelProps={{ style: { color: "white" } }}
-              />
-              <TextField
-                variant="outlined"
-                label="UPC"
-                sx={{
-                  display: "block",
-                  margin: ".5rem 0",
-                }}
-                name="upc"
-                onChange={handleChange}
-                value={item.upc}
-                inputProps={{ style: { color: "white" } }}
-                InputLabelProps={{ style: { color: "white" } }}
-              />
-              <TextField
-                variant="outlined"
-                label="Cost"
-                sx={{
-                  display: "block",
-                  margin: ".5rem 0",
-                }}
-                type="number"
-                name="costo"
-                onChange={handleChange}
-                value={item.costo}
-                inputProps={{ style: { color: "white" } }}
-                InputLabelProps={{ style: { color: "white" } }}
-              />
-              <TextField
-                variant="outlined"
-                label="Description"
-                sx={{
-                  display: "block",
-                  margin: ".5rem 0",
-                }}
-                name="descripcion"
-                onChange={handleChange}
-                value={item.descripcion}
-                inputProps={{ style: { color: "white" } }}
-                InputLabelProps={{ style: { color: "white" } }}
-              />
-             
+            <TextField
+              variant="outlined"
+              label="Name"
+              sx={{
+                display: "block",
+                margin: ".5rem 0",
+              }}
+              name="nombre"
+              onChange={handleChange}
+              value={item.nombre}
+              inputProps={{ style: { color: "white" } }}
+              InputLabelProps={{ style: { color: "white" } }}
+            />
+            <TextField
+              variant="outlined"
+              label="UPC"
+              sx={{
+                display: "block",
+                margin: ".5rem 0",
+              }}
+              name="upc"
+              onChange={handleChange}
+              value={item.upc}
+              inputProps={{ style: { color: "white" } }}
+              InputLabelProps={{ style: { color: "white" } }}
+            />
+            <TextField
+              variant="outlined"
+              label="Cost"
+              sx={{
+                display: "block",
+                margin: ".5rem 0",
+              }}
+              type="number"
+              name="costo"
+              onChange={handleChange}
+              value={item.costo}
+              inputProps={{ style: { color: "white" } }}
+              InputLabelProps={{ style: { color: "white" } }}
+            />
+            <TextField
+              variant="outlined"
+              label="Description"
+              sx={{
+                display: "block",
+                margin: ".5rem 0",
+              }}
+              name="descripcion"
+              onChange={handleChange}
+              value={item.descripcion}
+              inputProps={{ style: { color: "white" } }}
+              InputLabelProps={{ style: { color: "white" } }}
+            />
 
-             <div>
-             <div className="col-10">
-              <input id="fileinput" onChange={selectedHandler} className="form-control" type="file"/>
+            <div>
+              <div className="col-10">
+                <input
+                  id="fileinput"
+                  onChange={selectedHandler}
+                  className="form-control"
+                  type="file"
+                />
+              </div>
+              <img
+                src="/home/kuroyakedo/Documents/projects/tagsv2/src/images/1663381830260-item-708887.jpg"
+                alt="trying"
+                width={200}
+                height={200}
+              />
             </div>
-            <img src="/home/kuroyakedo/Documents/projects/tagsv2/src/images/1663381830260-item-708887.jpg" alt="trying" width={200}height={200} />
-             </div>
 
-
-
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                disabled={
-                  !item.nombre || !item.upc || !item.costo || !item.descripcion
-                }
-                onClick={handleSubmit}
-              >
-                {loading ? (
-                  <CircularProgress color="inherit" size={25} />
-                ) : (
-                  "Save"
-                )}
-              </Button>
-            
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              disabled={
+                !item.nombre || !item.upc || !item.costo || !item.descripcion
+              }
+              onClick={handleSubmit}
+            >
+              {loading ? (
+                <CircularProgress color="inherit" size={25} />
+              ) : (
+                "Save"
+              )}
+            </Button>
           </CardContent>
         </Card>
       </Grid>

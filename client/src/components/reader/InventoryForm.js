@@ -7,28 +7,35 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-//30342CB3E4103349EC246836
-//30342E120C10529AC688C393
+import { v4 as uuidv4 } from "uuid";
+
 const InventoryForm = () => {
   const [codigo, setCodigo] = useState({
-    rfid:""
+    rfid: "",
   });
+  const [items, setItems] = useState([]);
   const handleChange = (e) => {
-    setCodigo(
-      {...codigo,rfid:e.target.value});
+    setCodigo({ ...codigo, rfid: e.target.value });
   };
   const handleSubmit = async (event) => {
-    /*const result = await fetch(
-      `https://rfidcoder.gs1.org/api/tag/epc/${rfid}?apikey=${process.env.API_KEY}/`
-    );*/
     const response = await fetch("http://localhost:3001/inventory", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(codigo),
     });
-    await response.json();
+    const data = await response.json();
+    const nuevoItem = {
+      id: data.idcatalogo,
+      nombre: data.nombre,
+      upc: data.upc,
+      total: data.total,
+      costo: data.costo,
+      descripcion: data.descripcion,
+      rutaimagen: data.imagen,
+    };
+    setItems((items) => [...items, nuevoItem]);
+    console.log(nuevoItem);
   };
-  //GS1.GTIN ES EL UPC
   return (
     <Grid
       container
@@ -48,31 +55,52 @@ const InventoryForm = () => {
             Inventory
           </Typography>
           <CardContent>
-            <form onSubmit={handleSubmit}>
-              <TextField
-                label="Codigo"
-                sx={{
-                  display: "block",
-                  margin: ".5rem 0",
-                }}
-                name="codigo"
-                value={codigo.rfid}
-                onChange={handleChange}
-                inputProps={{ style: { color: "white" } }}
-                InputLabelProps={{ style: { color: "white" } }}
-              />
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                disabled={!codigo}                
-              >
-                Save
-              </Button>
-            </form>
+            <TextField
+              label="Codigo"
+              sx={{
+                display: "block",
+                margin: ".5rem 0",
+              }}
+              name="codigo"
+              value={codigo.rfid}
+              onChange={handleChange}
+              inputProps={{ style: { color: "white" } }}
+              InputLabelProps={{ style: { color: "white" } }}
+            />
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              disabled={!codigo}
+              onClick={handleSubmit}
+            >
+              Save
+            </Button>
           </CardContent>
         </Card>
       </Grid>
+      <table>
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Imagen</th>
+            <th>Descripcion</th>
+            <th>Costo</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          {items.map((i) => (
+            <tr key={uuidv4()}>
+              <td>{i.nombre}</td>
+              <td>{i.rutaimagen}</td>
+              <td>{i.descripcion}</td>
+              <td>{i.costo}</td>
+              <td>{i.total}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </Grid>
   );
 };

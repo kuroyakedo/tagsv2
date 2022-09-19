@@ -8,7 +8,7 @@ const addInventory = async (req, res, next) => {
   let upc = epcTds.valueOf(rfid);
   try {
     const result = await pool.query(
-      "UPDATE inventario AS i SET total=total+1 FROM catalogo AS c WHERE c.upc=$1 AND i.idcatalogo=c.id",
+      "UPDATE inventario AS i SET total=total+1 FROM catalogo AS c WHERE c.upc=$1 AND i.idcatalogo=c.id RETURNING *",
       [upc.getGtin()]
     );
     res.json(result.rows[0]);
