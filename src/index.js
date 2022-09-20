@@ -8,27 +8,35 @@ const itemsRoutes = require("./routes/items.routes");
 const inventoryRoutes = require("./routes/inventory.routes");
 const cashierRoutes = require("./routes/cashier.routes");
 const guardRoutes = require("./routes/guard.routes");
+const loginRoutes = require("./routes/login.routes");
 const path = require("path");
-const session = require('express-session')
-require('dotenv').config();
+const session = require("express-session");
+require("dotenv").config();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
 app.use(morgan("dev"));
 app.use(express.json());
-
-app.use(session({
-  secret:process.env.COOKIE_SECRET,
-  credentials:true,
-  name:"sid",
-  resave:false,
-  saveUninitialized:false,
-  cookie:{
-    secure:process.env.ENVIROMENT==="production"?"true":"auto",
-    httpOnly:true,
-    sameSite:process.env.ENVIROMENT==="production"?"none":"lax",
-  }
-}));
-
+app.use(
+  session({
+    secret: process.env.COOKIE_SECRET,
+    credentials: true,
+    name: "sid",
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      secure: process.env.ENVIRONMENT === "production" ? "true" : "auto",
+      httpOnly: true,
+      expires: 1000 * 60 * 60 * 24 * 7,
+      sameSite: process.env.ENVIRONMENT === "production" ? "none" : "lax",
+    },
+  })
+);
+app.use(loginRoutes);
 app.use(usersRoutes);
 app.use(rolesRoutes);
 app.use(itemsRoutes);

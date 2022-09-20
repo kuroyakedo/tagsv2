@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-//import { useNavigate, useParams } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Button,
   CardContent,
@@ -8,20 +8,41 @@ import {
   Typography,
   CircularProgress,
 } from "@mui/material";
+import { AccountContext } from "../AccountContext";
 
 const Login = () => {
-    const [user, setUser] = useState({
-        usuario: "",
-        password: ""        
-      });
-      const [loading, setLoading] = useState(false);
-      const handleChange = (e) =>
-      setUser({ ...user, [e.target.name]: e.target.value });
+  const { setUser } = useContext(AccountContext);
+  const navigate = useNavigate();
+  const [usuario, setUsuario] = useState({
+    usuario: "",
+    password: "",
+  });
+  const [loading, setLoading] = useState(false);
+  const handleChange = (e) =>
+    setUsuario({ ...usuario, [e.target.name]: e.target.value });
 
-      const handleSubmit=(e)=>{
-        setLoading(true);
-      }
-  
+  const handleSubmit = async (e) => {
+    setLoading(true);
+    const response = await fetch("http://localhost:3001/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(usuario),
+    });
+    const data = await response.json();
+    setLoading(false);
+    console.log(data);
+    if (data.id) {
+      setUser({ ...data });
+      navigate("/items");
+    }
+    /*if (data) {
+      //navigate("/items");
+      console.log(data);
+    } else {
+      setUser({ usuario: "", password: "" });
+    }*/
+  };
+
   return (
     <Grid
       container
@@ -29,60 +50,53 @@ const Login = () => {
       direction="column"
       justifyContent="center"
     >
-        <Typography variant="h5" textAlign="center" color="white">
-            Log in
-          </Typography>
-          <CardContent>
-    <form onSubmit={handleSubmit}>
-    <TextField
-              variant="outlined"
-              label="User"
-              sx={{
-                display: "block",
-                margin: ".5rem 0",
-              }}
-              name="usuario"
-              onChange={handleChange}
-              value={user.usuario}
-              inputProps={{ style: { color: "white" } }}
-              InputLabelProps={{ style: { color: "white" } }}
-              placeholder="Enter username"
-            />       
-            <TextField
-              type="password"
-              variant="outlined"
-              label="Password"
-              sx={{
-                display: "block",
-                margin: ".5rem 0",
-              }}
-              name="password"
-              onChange={handleChange}
-              value={user.password }
-              inputProps={{ style: { color: "white" } }}
-              InputLabelProps={{ style: { color: "white" } }}
-              placeholder="Enter password"
-            />
-            
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              disabled={
-                !user.usuario || !user.password 
-              }              
-            >
-              {loading ? (
-                <CircularProgress color="inherit" size={25} />
-              ) : (
-                "Log in"
-              )}
-            </Button>
-    </form>
-          </CardContent>
+      <Typography variant="h5" textAlign="center" color="white">
+        Log in
+      </Typography>
+      <CardContent>
+        <form>
+          <TextField
+            variant="outlined"
+            label="User"
+            sx={{
+              display: "block",
+              margin: ".5rem 0",
+            }}
+            name="usuario"
+            onChange={handleChange}
+            value={usuario.usuario}
+            inputProps={{ style: { color: "white" } }}
+            InputLabelProps={{ style: { color: "white" } }}
+            placeholder="Enter username"
+          />
+          <TextField
+            type="password"
+            variant="outlined"
+            label="Password"
+            sx={{
+              display: "block",
+              margin: ".5rem 0",
+            }}
+            name="password"
+            onChange={handleChange}
+            value={usuario.password}
+            inputProps={{ style: { color: "white" } }}
+            InputLabelProps={{ style: { color: "white" } }}
+            placeholder="Enter password"
+          />
+        </form>
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          disabled={!usuario.usuario || !usuario.password}
+          onClick={handleSubmit}
+        >
+          {loading ? <CircularProgress color="inherit" size={25} /> : "Log in"}
+        </Button>
+      </CardContent>
     </Grid>
-
-  )
-}
+  );
+};
 
 export default Login;

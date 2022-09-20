@@ -15,7 +15,7 @@ const UserList = () => {
 
   const handleDelete = async (id) => {
     try {
-      await fetch(`http://localhost:4000/tasks/${id}`, {
+      await fetch(`http://localhost:3001/users/${id}`, {
         method: "DELETE",
       });
       setUsers(users.filter((task) => task.id !== id));

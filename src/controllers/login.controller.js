@@ -1,45 +1,42 @@
-const { nextTick } = require("process");
 const pool = require("../db");
-var CryptoJS = require("crypto-js");
-const { kMaxLength } = require("buffer");
+const bcrypt = require("bcrypt");
 
-const login = async (req,res,next) => {
+const LogIn = async (req, res, next) => {
+  console.log(req.session);
   try {
-    const { usuario,password } = req.body;
-    const hashedPassword = CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex);
+    const { usuario, password } = req.body;
     const result = await pool.query(
-      "ISELECT * FROM usuarios WHERE usuario=$1 AND password=$2",
-      [usuario,hashedPassword]
+      "SELECT * FROM usuarios WHERE usuario=$1  ",
+      [usuario]
     );
     if (result.rows.length === 0)
-    return res.json({ id:0,loggedIn:false,status: "User not found" });
-    req.session.user={
-      id:result.rows[0].id,
-      username:result.rows[0].username,
-      name:result.rows[0].name,
-      role:result.rows[0].role,
-      loggedIn:true,
-      status: "Logged in!"
+      return res.json({ id: 0, loggedIn: false, status: "User not found" });
+    const confirmPAssword = bcrypt.compareSync(
+      password,
+      result.rows[0].password
+    );
+    console.log(confirmPAssword, result.rows[0].password, password);
+    if (confirmPAssword) {
+      req.session.user = {
+        id: result.rows[0].id,
+        username: result.rows[0].username,
+        name: result.rows[0].name,
+        role: result.rows[0].role,
+        loggedIn: true,
+        status: "Logged in!",
+      };
+      res.json(result.rows[0]);
+    } else {
+      return res.json({
+        id: 0,
+        loggedIn: false,
+        status: "Password doesn't match",
+      });
     }
-    res.json(result.rows[0]);
   } catch (err) {
+    //next(err);
     console.log(err);
   }
 };
 
-module.exports = payment;
-/*let epc = epcTds.valueOf("30342CB3E4103349EC246836"); // sgtin-96
-  // Acces to epc properties
-  console.log("Type--: " + epc.getType()); // TDS ID
-  console.log("Filter: " + epc.getFilter()); // filter index
-  console.log("Partition: " + epc.getPartition()); // partition index
-  console.log("CompanyPrefix: " + epc.getCompanyPrefix());
-  console.log("ItemReference: " + epc.getItemReference());
-  console.log("GTIN(EAN): " + epc.getGtin()); // ean
-  console.log("HexEPC: " + epc.toHexString()); // HEX EPC
-  console.log("Tag URI: " + epc.toTagURI());
-
-  // Decode from Hex Tag URI
-  epc = epcTds.fromTagURI("urn:epc:tag:sgtin-96:3.0614141.812345.6789");
-  console.log("HexEPC: " + epc.toHexString()); // HEX EPC
-  console.log("Tag URI: " + epc.toTagURI());*/
+module.exports = { LogIn };

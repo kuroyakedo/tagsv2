@@ -1,10 +1,9 @@
 const { nextTick } = require("process");
 const pool = require("../db");
-var CryptoJS = require("crypto-js");
+/*var CryptoJS = require("crypto-js");
 var AES = require("crypto-js/aes");
-var SHA256 = require("crypto-js/sha256");
-
-//const epcTds = require("epc-tds");
+var SHA256 = require("crypto-js/sha256");*/
+const bcrypt = require("bcrypt");
 
 const getAllUsers = async (req, res, next) => {
   try {
@@ -34,12 +33,13 @@ const getUser = async (req, res, next) => {
 };
 
 const createUser = async (req, res, next) => {
-  const { usuario, password, nombre, rol } = req.body;
-  const hash = CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex);
   try {
+    const { usuario, password, nombre, role } = req.body;
+    const salt = bcrypt.genSaltSync(10);
+    const hashedPassword = bcrypt.hashSync(password, salt);
     const result = await pool.query(
       "INSERT INTO usuarios(nombre,rol,usuario,password)VALUES ($1,$2,$3,$4) RETURNING *",
-      [nombre, rol, usuario, hash]
+      [nombre, parseInt(role), usuario, hashedPassword]
     );
     res.json(result.rows[0]);
   } catch (err) {
@@ -66,11 +66,12 @@ const deleteUser = async (req, res, next) => {
 const modifyUser = async (req, res, next) => {
   const { id } = req.params;
   const { usuario, password, nombre, role } = req.body;
-  const hash = CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex);
+  const salt = bcrypt.genSaltSync(10);
+  const hashedPassword = bcrypt.hashSync(password, salt);
   try {
     const result = await pool.query(
       "UPDATE usuarios SET nombre=$1,rol=$2,usuario=$3,password=$4 WHERE id=$5 RETURNING *",
-      [nombre, parseInt(role), usuario, hash, id]
+      [nombre, parseInt(role), usuario, hashedPassword, id]
     );
     res.json(result.rows[0]);
   } catch (err) {
