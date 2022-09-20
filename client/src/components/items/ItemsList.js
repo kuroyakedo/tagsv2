@@ -4,8 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { Button, Card, CardContent, Typography, Stack } from "@mui/material";
 
 const ItemsList = () => {
-  //const host_name = process.env.REACT_APP_HOST;
-  //const port = process.env.REACT_APP_PORT;
+  const host_name = process.env.NODE_ENV_HOST;
+  const port = process.env.NODE_ENV_PORT;
+  console.log(host_name, port);
   const [items, setItems] = useState([]);
   const navigate = useNavigate();
 
