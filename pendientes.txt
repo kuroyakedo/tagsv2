@@ -1,17 +1,18 @@
 CATALOGO
 [x]Subir imagen del item
 []Eliminar foto al editar
-[]Mostrar miniatura de imagen en lista
+[x]Mostrar miniatura de imagen en lista
 
 USUARIOS
 []Cargo seleccionado en edición
+[]Revisar crear usuario (select)
 
 INVENTARIO
 [x]Leer código
 [x]Decodificar UPC
 [x]Buscar ID del UPC
 [x]Incrementar el inventario
-[]Mostrar tabla de lo agregado
+[x]Mostrar tabla de lo agregado
 []Imagen de los items
 
 CAJA
@@ -30,3 +31,6 @@ PUERTA
 --[x]si no está en la lista de ventas mostrar en pantalla el producto
 --[]Mostrar imagen en caso de robo
 
+
+[]LOGIN
+[]SESION

@@ -8,6 +8,7 @@ import Cashier from "./components/reader/CashierForm";
 import Guard from "./components/reader/GuardForm";
 import ItemsList from "./components/items/ItemsList";
 import ItemForm from "./components/items/ItemForm";
+import Login from "./components/login/Login";
 //import { Container } from "@mui/system";
 
 const App = () => {
@@ -16,6 +17,7 @@ const App = () => {
       <Navbar />
       <Container>
         <Routes>
+          <Route path="/login" element={<Login />} />
           <Route path="/users" element={<UserList />} />
           <Route path="/newUser" element={<UserForm />} />
           <Route path="/users/:id/edit" element={<UserForm />} />

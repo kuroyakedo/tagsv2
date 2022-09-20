@@ -183,12 +183,7 @@ const ItemForm = () => {
                   type="file"
                 />
               </div>
-              <img
-                src="/home/kuroyakedo/Documents/projects/tagsv2/src/images/1663381830260-item-708887.jpg"
-                alt="trying"
-                width={200}
-                height={200}
-              />
+              
             </div>
 
             <Button
