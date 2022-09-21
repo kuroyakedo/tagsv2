@@ -8,23 +8,19 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { v4 as uuidv4 } from "uuid";
 //30342CB3E4103349EC246836
 //30342E120C10529AC688C393
 const GuardForm = () => {
   const [codigo, setCodigo] = useState("");
   const [item, setItem] = useState(undefined);
-  //const [robo,setRobo]=useState(false)
+  
   const handleChange = (e) => {
-    //setCodigo({ ...codigo, rfid: e.target.value });
     setCodigo(e.target.value);
   };
 
   const handleSubmit = async (event) => {
-    /*const response = await fetch("http://localhost:3001/guard", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(codigo),
-    })*/
+   
     const res = await fetch("http://localhost:3001/guard/" + codigo);
     const data = await res.json();
     console.log(data);
@@ -41,6 +37,7 @@ const GuardForm = () => {
       upc: data.upc,
       costo: data.costo,
       descripcion: data.descripcion,
+      rutaimagen:data.rutaimagen
     });
   };
   return (
@@ -85,7 +82,12 @@ const GuardForm = () => {
             </Button>
 
             <Typography variant="h5" textAlign="center" color="white">
-              {item !== undefined ? `${item.nombre}` : ""}
+              {item !== undefined ? <img
+                  src={"http://localhost:3001/" + item.rutaimagen}
+                  alt="TEST"
+                  width="100"
+                  height="150"
+                ></img> : ""}
             </Typography>
           </CardContent>
         </Card>

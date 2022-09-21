@@ -30,10 +30,19 @@ const Login = () => {
     });
     const data = await response.json();
     setLoading(false);
-    console.log(data);
     if (data.id) {
       setUser({ ...data });
-      navigate("/items");
+      localStorage.setItem("rol", data.rol);      
+      if(data.rol===1)
+      navigate("/users");
+      if(data.rol===2)
+      navigate("/inventory");
+      if(data.rol===3)
+      navigate("/cashier");
+      if(data.rol===4)
+      navigate("/guard");
+
+
     }
     /*if (data) {
       //navigate("/items");

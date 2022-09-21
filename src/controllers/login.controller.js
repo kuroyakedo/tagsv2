@@ -15,7 +15,7 @@ const LogIn = async (req, res, next) => {
       password,
       result.rows[0].password
     );
-    console.log(confirmPAssword, result.rows[0].password, password);
+    
     if (confirmPAssword) {
       req.session.user = {
         id: result.rows[0].id,

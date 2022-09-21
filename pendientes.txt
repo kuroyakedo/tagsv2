@@ -1,3 +1,7 @@
+NAVBAR
+[]Menu links
+
+
 CATALOGO
 [x]Subir imagen del item
 []Eliminar foto al editar
@@ -13,7 +17,7 @@ INVENTARIO
 [x]Buscar ID del UPC
 [x]Incrementar el inventario
 [x]Mostrar tabla de lo agregado
-[]Imagen de los items
+[x]Imagen de los items
 
 CAJA
 [x]Leer código
@@ -21,16 +25,17 @@ CAJA
 [x]Buscar ID del UPC
 [x]Descontar de inventario
 [x]Registrar RFIDs Vendidos
-[]Mostrar tabla de lo agregado
-[]Imagen de los items
+[x]Mostrar tabla de lo agregado
+[x]Imagen de los items
 
 PUERTA
 [x]Leer RFIDs
 [x]Verificar estado
 --[x]si esta vendido no pasa nada
 --[x]si no está en la lista de ventas mostrar en pantalla el producto
---[]Mostrar imagen en caso de robo
+--[x]Mostrar imagen en caso de robo
 
 
-[]LOGIN
-[]SESION
+[x]LOGIN
+[x]SESION
+[]LOGOUT

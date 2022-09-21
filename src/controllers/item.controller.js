@@ -100,7 +100,7 @@ const itemsRfid = async (req, res, next) => {
     let upc = epc.getGtin();
     console.log(upc);
     const result = await pool.query(
-      "SELECT nombre,upc,costo,descripcion FROM catalogo WHERE upc=$1",
+      "SELECT nombre,upc,costo,descripcion,rutaimagen FROM catalogo WHERE upc=$1",
       [upc]
     );
     if (result.rows.length === 0)

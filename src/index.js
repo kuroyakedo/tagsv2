@@ -44,7 +44,7 @@ app.use(inventoryRoutes);
 app.use(cashierRoutes);
 app.use(guardRoutes);
 
-app.use(express.static(path.join(__dirname, "images")));
+app.use(express.static(path.join(__dirname, "./images")));
 
 app.use((err, req, res, next) => {
   return res.json({ message: "Error!" });
