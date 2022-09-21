@@ -31,10 +31,10 @@ const InventoryForm = () => {
       total: data.total,
       costo: data.costo,
       descripcion: data.descripcion,
-      rutaimagen: data.imagen,
+      rutaimagen: data.rutaimagen,
     };
     setItems((items) => [...items, nuevoItem]);
-    console.log(nuevoItem);
+    setCodigo({ ...codigo, rfid: "" });
   };
   return (
     <Grid
@@ -93,12 +93,14 @@ const InventoryForm = () => {
           {items.map((i) => (
             <tr key={uuidv4()}>
               <td>{i.nombre}</td>
-              <td><img
+              <td>
+                <img
                   src={"http://localhost:3001/" + i.rutaimagen}
                   alt="TEST"
                   width="100"
                   height="150"
-                ></img></td>
+                ></img>
+              </td>
               <td>{i.descripcion}</td>
               <td>{i.costo}</td>
               <td>{i.total}</td>

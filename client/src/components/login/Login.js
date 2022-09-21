@@ -32,24 +32,12 @@ const Login = () => {
     setLoading(false);
     if (data.id) {
       setUser({ ...data });
-      localStorage.setItem("rol", data.rol);      
-      if(data.rol===1)
-      navigate("/users");
-      if(data.rol===2)
-      navigate("/inventory");
-      if(data.rol===3)
-      navigate("/cashier");
-      if(data.rol===4)
-      navigate("/guard");
-
-
+      localStorage.setItem("rol", data.rol);
+      if (data.rol === 1) navigate("/users");
+      if (data.rol === 2) navigate("/inventory");
+      if (data.rol === 3) navigate("/cashier");
+      if (data.rol === 4) navigate("/guard");
     }
-    /*if (data) {
-      //navigate("/items");
-      console.log(data);
-    } else {
-      setUser({ usuario: "", password: "" });
-    }*/
   };
 
   return (

@@ -1,6 +1,5 @@
 NAVBAR
-[]Menu links
-
+[x]Menu links
 
 CATALOGO
 [x]Subir imagen del item
@@ -39,3 +38,5 @@ PUERTA
 [x]LOGIN
 [x]SESION
 []LOGOUT
+
+[]Refactorización

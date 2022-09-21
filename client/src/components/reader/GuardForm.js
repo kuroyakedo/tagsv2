@@ -14,13 +14,12 @@ import { v4 as uuidv4 } from "uuid";
 const GuardForm = () => {
   const [codigo, setCodigo] = useState("");
   const [item, setItem] = useState(undefined);
-  
+
   const handleChange = (e) => {
     setCodigo(e.target.value);
   };
 
   const handleSubmit = async (event) => {
-   
     const res = await fetch("http://localhost:3001/guard/" + codigo);
     const data = await res.json();
     console.log(data);
@@ -37,8 +36,9 @@ const GuardForm = () => {
       upc: data.upc,
       costo: data.costo,
       descripcion: data.descripcion,
-      rutaimagen:data.rutaimagen
+      rutaimagen: data.rutaimagen,
     });
+    setCodigo("");
   };
   return (
     <Grid
@@ -82,12 +82,16 @@ const GuardForm = () => {
             </Button>
 
             <Typography variant="h5" textAlign="center" color="white">
-              {item !== undefined ? <img
+              {item !== undefined ? (
+                <img
                   src={"http://localhost:3001/" + item.rutaimagen}
                   alt="TEST"
                   width="100"
                   height="150"
-                ></img> : ""}
+                ></img>
+              ) : (
+                ""
+              )}
             </Typography>
           </CardContent>
         </Card>
