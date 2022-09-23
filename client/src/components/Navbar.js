@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useContext } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -6,23 +6,24 @@ import Typography from "@mui/material/Typography";
 import { Container } from "@mui/material";
 import { Link } from "react-router-dom";
 import { AccountContext } from "./AccountContext";
+import { useNavigate } from "react-router-dom";
 
-export default function ButtonAppBar() {
-  //const [navbarUserIsLogged, setnavbarUserIsLogged] = useState(false);
-  const [enlaces, setEnlaces] = useState([]);
-  const { user } = useContext(AccountContext);
+export default function Navbar() {
+  const { user, setUser } = useContext(AccountContext);
   useEffect(() => {
     (async () => {
-      if (user.id) {
-        loadLinks(user.rol);
+      if (user.loggedIn) {
+        // loadLinks(user.role);
       }
     })();
-  }, [user.id]);
+  }, [user.loggedIn]);
 
-  const loadLinks = async (id) => {
-    const response = await fetch("http://localhost:3001/links/" + id);
-    const data = await response.json();
-    setEnlaces(data);
+  const navigate = useNavigate();
+  const handleClick = () => {
+    setUser({ ...user, loggedIn: false });
+    localStorage.setItem("role", null);
+    localStorage.setItem("id", null);
+    navigate("/login");
   };
 
   return (
@@ -33,18 +34,79 @@ export default function ButtonAppBar() {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               READER
             </Typography>
-            {enlaces
-              ? enlaces.map((e) => (
-                  <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                    <Link
-                      to={e.enlace}
-                      style={{ textDecoration: "none", color: "#eee" }}
-                    >
-                      {e.nombre}
-                    </Link>
-                  </Typography>
-                ))
-              : ""}
+            {user.loggedIn && user.role === 1 ? (
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                <Link
+                  to="/users"
+                  style={{ textDecoration: "none", color: "#eee" }}
+                >
+                  Users
+                </Link>
+              </Typography>
+            ) : (
+              ""
+            )}
+            {user.loggedIn && (user.role === 1 || user.role === 2) ? (
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                <Link
+                  to="/items"
+                  style={{ textDecoration: "none", color: "#eee" }}
+                >
+                  Items
+                </Link>
+              </Typography>
+            ) : (
+              ""
+            )}
+            {user.loggedIn && (user.role === 1 || user.role === 2) ? (
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                <Link
+                  to="/inventory"
+                  style={{ textDecoration: "none", color: "#eee" }}
+                >
+                  Inventory
+                </Link>
+              </Typography>
+            ) : (
+              ""
+            )}
+            {user.loggedIn && (user.role === 1 || user.role === 3) ? (
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                <Link
+                  to="/cashier"
+                  style={{ textDecoration: "none", color: "#eee" }}
+                >
+                  Cashier
+                </Link>
+              </Typography>
+            ) : (
+              ""
+            )}
+            {user.loggedIn && (user.role === 1 || user.role === 4) ? (
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                <Link
+                  to="/guards"
+                  style={{ textDecoration: "none", color: "#eee" }}
+                >
+                  Guards
+                </Link>
+              </Typography>
+            ) : (
+              ""
+            )}
+            {user.loggedIn ? (
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                <Link
+                  to=""
+                  onClick={handleClick}
+                  style={{ textDecoration: "none", color: "#eee" }}
+                >
+                  Log Out
+                </Link>
+              </Typography>
+            ) : (
+              ""
+            )}
           </Toolbar>
         </Container>
       </AppBar>

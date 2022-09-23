@@ -1,14 +1,11 @@
 const { nextTick } = require("process");
 const pool = require("../db");
-/*var CryptoJS = require("crypto-js");
-var AES = require("crypto-js/aes");
-var SHA256 = require("crypto-js/sha256");*/
 const bcrypt = require("bcrypt");
 
 const getAllUsers = async (req, res, next) => {
   try {
     const result = await pool.query(
-      "SELECT id,nombre,rol,usuario FROM usuarios"
+      "SELECT id,nombre,role,usuario FROM usuarios"
     );
     res.json(result.rows);
   } catch (err) {
@@ -21,7 +18,7 @@ const getUser = async (req, res, next) => {
   try {
     const { id } = req.params;
     const result = await pool.query(
-      "SELECT id,nombre,rol,usuario FROM usuarios WHERE id=$1",
+      "SELECT id,nombre,role,usuario FROM usuarios WHERE id=$1",
       [id]
     );
     if (result.rows.length === 0)
@@ -38,7 +35,7 @@ const createUser = async (req, res, next) => {
     const salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(password, salt);
     const result = await pool.query(
-      "INSERT INTO usuarios(nombre,rol,usuario,password)VALUES ($1,$2,$3,$4) RETURNING *",
+      "INSERT INTO usuarios(nombre,role,usuario,password)VALUES ($1,$2,$3,$4) RETURNING *",
       [nombre, parseInt(role), usuario, hashedPassword]
     );
     res.json(result.rows[0]);
@@ -70,7 +67,7 @@ const modifyUser = async (req, res, next) => {
   const hashedPassword = bcrypt.hashSync(password, salt);
   try {
     const result = await pool.query(
-      "UPDATE usuarios SET nombre=$1,rol=$2,usuario=$3,password=$4 WHERE id=$5 RETURNING *",
+      "UPDATE usuarios SET nombre=$1,role=$2,usuario=$3,password=$4 WHERE id=$5 RETURNING *",
       [nombre, parseInt(role), usuario, hashedPassword, id]
     );
     res.json(result.rows[0]);

@@ -31,8 +31,18 @@ const Login = () => {
     const data = await response.json();
     setLoading(false);
     if (data.id) {
-      setUser({ ...data });
-      localStorage.setItem("rol", data.rol);
+      setUser({
+        ...data,
+        id: data.id,
+        username: data.username,
+        name: data.name,
+        role: data.role,
+        loggedIn: true,
+        status: "Logged in",
+      });
+      localStorage.setItem("role", data.role);
+      localStorage.setItem("id", data.id);
+
       if (data.rol === 1) navigate("/users");
       if (data.rol === 2) navigate("/inventory");
       if (data.rol === 3) navigate("/cashier");

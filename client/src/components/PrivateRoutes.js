@@ -7,6 +7,7 @@ const useAuth = () => {
   const { user } = useContext(AccountContext);
   return user && user.id;
 };
+
 const PrivateRoutes = () => {
   const isAuth = useAuth();
   return isAuth ? <Outlet /> : <Navigate to="/" />;
