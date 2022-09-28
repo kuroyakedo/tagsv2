@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 //import Select from 'react-select'
 import { useNavigate, useParams } from "react-router-dom";
+import Container from "../../containers/Container";
 
 import {
   Button,
@@ -92,125 +93,127 @@ const UserForm = () => {
   };
 
   return (
-    <Grid
-      container
-      alignItems="center"
-      direction="column"
-      justifyContent="center"
-    >
-      <Grid item xs={3}>
-        <Card
-          sx={{ mt: 5 }}
-          style={{
-            backgroundColor: "#1E272E",
-            padding: "1rem",
-          }}
-        >
-          <Typography variant="h5" textAlign="center" color="white">
-            {editing ? "Update User" : "Create User"}
-          </Typography>
-          <CardContent>
-            <form onSubmit={handleSubmit}>
-              <TextField
-                variant="filled"
-                label="Username"
-                sx={{
-                  display: "block",
-                  margin: ".5rem 0",
-                }}
-                name="usuario"
-                onChange={handleChange}
-                value={usuario.usuario}
-                inputProps={{ style: { color: "white" } }}
-                InputLabelProps={{ style: { color: "white" } }}
-              />
-              <TextField
-                variant="outlined"
-                label="Name"
-                sx={{
-                  display: "block",
-                  margin: ".5rem 0",
-                }}
-                name="nombre"
-                onChange={handleChange}
-                value={usuario.nombre}
-                inputProps={{ style: { color: "white" } }}
-                InputLabelProps={{ style: { color: "white" } }}
-              />
-              <FormControl
-                sx={{
-                  display: "block",
-                  margin: ".5rem 0",
-                  color: "white",
-                }}
-              >
-                <InputLabel
-                  id="test-select-label"
+    <Container>
+      <Grid
+        container
+        alignItems="center"
+        direction="column"
+        justifyContent="center"
+      >
+        <Grid item xs={3}>
+          <Card
+            sx={{ mt: 5 }}
+            style={{
+              backgroundColor: "#1E272E",
+              padding: "1rem",
+            }}
+          >
+            <Typography variant="h5" textAlign="center" color="white">
+              {editing ? "Update User" : "Create User"}
+            </Typography>
+            <CardContent>
+              <form onSubmit={handleSubmit}>
+                <TextField
+                  variant="filled"
+                  label="Username"
+                  sx={{
+                    display: "block",
+                    margin: ".5rem 0",
+                  }}
+                  name="usuario"
+                  onChange={handleChange}
+                  value={usuario.usuario}
+                  inputProps={{ style: { color: "white" } }}
+                  InputLabelProps={{ style: { color: "white" } }}
+                />
+                <TextField
+                  variant="outlined"
+                  label="Name"
+                  sx={{
+                    display: "block",
+                    margin: ".5rem 0",
+                  }}
+                  name="nombre"
+                  onChange={handleChange}
+                  value={usuario.nombre}
+                  inputProps={{ style: { color: "white" } }}
+                  InputLabelProps={{ style: { color: "white" } }}
+                />
+                <FormControl
                   sx={{
                     display: "block",
                     margin: ".5rem 0",
                     color: "white",
                   }}
                 >
-                  Role
-                </InputLabel>
-                <p>{usuario.role}</p>
-                <p>{localValue}</p>
-                <Select
-                  name="Role"
-                  label="Role"
-                  value={localValue}
-                  defaultValue={localValue}
-                  onChange={handleChangeSelect}
+                  <InputLabel
+                    id="test-select-label"
+                    sx={{
+                      display: "block",
+                      margin: ".5rem 0",
+                      color: "white",
+                    }}
+                  >
+                    Role
+                  </InputLabel>
+                  <p>{usuario.role}</p>
+                  <p>{localValue}</p>
+                  <Select
+                    name="Role"
+                    label="Role"
+                    value={localValue}
+                    defaultValue={localValue}
+                    onChange={handleChangeSelect}
+                    sx={{
+                      display: "block",
+                      margin: ".5rem 0",
+                      color: "white",
+                    }}
+                  >
+                    <MenuItem value={1}>Manager</MenuItem>
+                    <MenuItem value={2}>Inventory</MenuItem>
+                    <MenuItem value={3}>Cashier</MenuItem>
+                    <MenuItem value={4}>Guard</MenuItem>
+                  </Select>
+                </FormControl>
+                <TextField
+                  variant="outlined"
+                  label="Password"
                   sx={{
                     display: "block",
                     margin: ".5rem 0",
-                    color: "white",
                   }}
-                >
-                  <MenuItem value={1}>Manager</MenuItem>
-                  <MenuItem value={2}>Inventory</MenuItem>
-                  <MenuItem value={3}>Cashier</MenuItem>
-                  <MenuItem value={4}>Guard</MenuItem>
-                </Select>
-              </FormControl>
-              <TextField
-                variant="outlined"
-                label="Password"
-                sx={{
-                  display: "block",
-                  margin: ".5rem 0",
-                }}
-                type="password"
-                name="password"
-                onChange={handleChange}
-                value={usuario.password}
-                inputProps={{ style: { color: "white" } }}
-                InputLabelProps={{ style: { color: "white" } }}
-              />
+                  type="password"
+                  name="password"
+                  onChange={handleChange}
+                  value={usuario.password}
+                  inputProps={{ style: { color: "white" } }}
+                  InputLabelProps={{ style: { color: "white" } }}
+                />
 
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                disabled={
-                  !usuario.usuario ||
-                  !usuario.nombre ||
-                  !usuario.role ||
-                  !usuario.password
-                }
-              >
-                {loading ? (
-                  <CircularProgress color="inherit" size={25} />
-                ) : (
-                  "Save"
-                )}
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  disabled={
+                    !usuario.usuario ||
+                    !usuario.nombre ||
+                    !usuario.role ||
+                    !usuario.password
+                  }
+                >
+                  {loading ? (
+                    <CircularProgress color="inherit" size={25} />
+                  ) : (
+                    "Save"
+                  )}
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
+        </Grid>
       </Grid>
-    </Grid>
+    </Container>
   );
 };
 
