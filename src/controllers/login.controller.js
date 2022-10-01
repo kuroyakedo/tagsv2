@@ -9,13 +9,13 @@ const LogIn = async (req, res, next) => {
       "SELECT * FROM usuarios WHERE usuario=$1  ",
       [usuario]
     );
+    console.log(result.rows);
     if (result.rows.length === 0)
       return res.json({ id: 0, loggedIn: false, status: "User not found" });
     const confirmPAssword = bcrypt.compareSync(
       password,
       result.rows[0].password
     );
-
     if (confirmPAssword) {
       req.session.user = {
         id: result.rows[0].id,

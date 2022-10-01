@@ -1,5 +1,6 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 import {
   Button,
   CardContent,
@@ -8,10 +9,9 @@ import {
   Typography,
   CircularProgress,
 } from "@mui/material";
-import { AccountContext } from "../AccountContext";
 
 const Login = () => {
-  const { setUser } = useContext(AccountContext);
+  const { setAuth } = useAuth();
   const navigate = useNavigate();
   const [usuario, setUsuario] = useState({
     usuario: "",
@@ -29,14 +29,18 @@ const Login = () => {
       body: JSON.stringify(usuario),
     });
     const data = await response.json();
+    console.log(data);
     setLoading(false);
-    if (data.id) {
-      setUser({ ...data });
-      localStorage.setItem("rol", data.rol);
-      if (data.rol === 1) navigate("/users");
-      if (data.rol === 2) navigate("/inventory");
-      if (data.rol === 3) navigate("/cashier");
-      if (data.rol === 4) navigate("/guard");
+    if (data) {
+      setAuth(data);
+      localStorage.setItem("auth", JSON.stringify(data));
+      localStorage.setItem("role", data.role);
+      localStorage.setItem("id", data.id);
+
+      if (data.role === 1) navigate("/users");
+      if (data.role === 2) navigate("/inventory");
+      if (data.role === 3) navigate("/cashier");
+      if (data.role === 4) navigate("/guard");
     }
   };
 

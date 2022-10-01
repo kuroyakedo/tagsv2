@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 // import DeleteModal from "./DeleteModal";
 import { useNavigate } from "react-router-dom";
 import { Button, Card, CardContent, Typography, Stack } from "@mui/material";
+import Container from "../../containers/Container";
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
@@ -29,7 +30,7 @@ const UserList = () => {
   }, []);
 
   return (
-    <>
+    <Container>
       <Stack
         direction="row"
         justifyContent="space-between"
@@ -88,7 +89,7 @@ const UserList = () => {
           </CardContent>
         </Card>
       ))}
-    </>
+    </Container>
   );
 };
 
