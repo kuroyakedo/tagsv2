@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 // import DeleteModal from "./DeleteModal";
 import { useNavigate } from "react-router-dom";
 import { Button, Card, CardContent, Typography, Stack } from "@mui/material";
+import Container from "../../containers/Container";
 
 const ItemsList = () => {
   const host_name = process.env.NODE_ENV_HOST;
@@ -32,7 +33,7 @@ const ItemsList = () => {
   }, []);
 
   return (
-    <>
+    <Container>
       <Stack
         direction="row"
         justifyContent="space-between"
@@ -99,7 +100,7 @@ const ItemsList = () => {
           </CardContent>
         </Card>
       ))}
-    </>
+    </Container>
   );
 };
 

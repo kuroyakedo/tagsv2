@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 //import Select from 'react-select'
 import { useNavigate, useParams } from "react-router-dom";
+import Container from "../../containers/Container";
 
 import {
   Button,
@@ -17,45 +18,39 @@ import {
 } from "@mui/material";
 
 const UserForm = () => {
-  const [user, setUser] = useState({
+  const [usuario, setUsuario] = useState({
     usuario: "",
     nombre: "",
-    role: "1",
+    role: 1,
     password: "",
   });
-  const [localValue, setLocalValue] = useState("");
+  const [localValue, setLocalValue] = useState(0);
   const handleChangeSelect = (e) => {
     const value = e.target.value;
     setLocalValue(value);
-    setUser({
-      ...user,
+    setUsuario({
+      ...usuario,
       role: e.target.value,
     });
-    console.log(user);
+    console.log(usuario);
   };
   const [loading, setLoading] = useState(false);
   const [editing, setEditing] = useState(false);
-  /*const options = [
-    { value: "1", label: "Manager" },
-    { value: "2", label: "Inventory" },
-    { value: "3", label: "Cashier" },
-    { value: "4", label: "Guard" },
-  ];*/
+
   const navigate = useNavigate();
   const params = useParams();
 
   const loadUser = async (id) => {
     const res = await fetch("http://localhost:3001/users/" + id);
     const data = await res.json();
-    setUser({
+    setUsuario({
       usuario: data.usuario,
       nombre: data.nombre,
       role: data.role,
       password: data.password,
     });
-    console.log(data);
     setEditing(true);
-    setLocalValue(user.role);
+    setLocalValue(data.role);
   };
   useEffect(() => {
     if (params.id) {
@@ -73,7 +68,7 @@ const UserForm = () => {
           {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(user),
+            body: JSON.stringify(usuario),
           }
         );
         await response.json();
@@ -81,11 +76,10 @@ const UserForm = () => {
         const response = await fetch("http://localhost:3001/users", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(user),
+          body: JSON.stringify(usuario),
         });
         await response.json();
       }
-
       setLoading(false);
       navigate("/users");
     } catch (error) {
@@ -94,135 +88,132 @@ const UserForm = () => {
   };
 
   const handleChange = (e) => {
-    setUser({ ...user, [e.target.name]: e.target.value });
-    console.log(user);
+    setUsuario({ ...usuario, [e.target.name]: e.target.value });
+    console.log(usuario);
   };
 
   return (
-    <Grid
-      container
-      alignItems="center"
-      direction="column"
-      justifyContent="center"
-    >
-      <Grid item xs={3}>
-        <Card
-          sx={{ mt: 5 }}
-          style={{
-            backgroundColor: "#1E272E",
-            padding: "1rem",
-          }}
-        >
-          <Typography variant="h5" textAlign="center" color="white">
-            {editing ? "Update User" : "Create User"}
-          </Typography>
-          <CardContent>
-            <form onSubmit={handleSubmit}>
-              <TextField
-                variant="filled"
-                label="Username"
-                sx={{
-                  display: "block",
-                  margin: ".5rem 0",
-                }}
-                name="usuario"
-                onChange={handleChange}
-                value={user.usuario}
-                inputProps={{ style: { color: "white" } }}
-                InputLabelProps={{ style: { color: "white" } }}
-              />
-              <TextField
-                variant="outlined"
-                label="Name"
-                sx={{
-                  display: "block",
-                  margin: ".5rem 0",
-                }}
-                name="nombre"
-                onChange={handleChange}
-                value={user.nombre}
-                inputProps={{ style: { color: "white" } }}
-                InputLabelProps={{ style: { color: "white" } }}
-              />
-              <FormControl
-                sx={{
-                  display: "block",
-                  margin: ".5rem 0",
-                  color: "white",
-                }}
-              >
-                <InputLabel
-                  id="test-select-label"
+    <Container>
+      <Grid
+        container
+        alignItems="center"
+        direction="column"
+        justifyContent="center"
+      >
+        <Grid item xs={3}>
+          <Card
+            sx={{ mt: 5 }}
+            style={{
+              backgroundColor: "#1E272E",
+              padding: "1rem",
+            }}
+          >
+            <Typography variant="h5" textAlign="center" color="white">
+              {editing ? "Update User" : "Create User"}
+            </Typography>
+            <CardContent>
+              <form onSubmit={handleSubmit}>
+                <TextField
+                  variant="filled"
+                  label="Username"
+                  sx={{
+                    display: "block",
+                    margin: ".5rem 0",
+                  }}
+                  name="usuario"
+                  onChange={handleChange}
+                  value={usuario.usuario}
+                  inputProps={{ style: { color: "white" } }}
+                  InputLabelProps={{ style: { color: "white" } }}
+                />
+                <TextField
+                  variant="outlined"
+                  label="Name"
+                  sx={{
+                    display: "block",
+                    margin: ".5rem 0",
+                  }}
+                  name="nombre"
+                  onChange={handleChange}
+                  value={usuario.nombre}
+                  inputProps={{ style: { color: "white" } }}
+                  InputLabelProps={{ style: { color: "white" } }}
+                />
+                <FormControl
                   sx={{
                     display: "block",
                     margin: ".5rem 0",
                     color: "white",
                   }}
                 >
-                  Role
-                </InputLabel>
-                <Select
-                  name="Role"
-                  label="Role"
-                  value={localValue}
-                  onChange={handleChangeSelect}
+                  <InputLabel
+                    id="test-select-label"
+                    sx={{
+                      display: "block",
+                      margin: ".5rem 0",
+                      color: "white",
+                    }}
+                  >
+                    Role
+                  </InputLabel>
+                  <p>{usuario.role}</p>
+                  <p>{localValue}</p>
+                  <Select
+                    name="Role"
+                    label="Role"
+                    value={localValue}
+                    defaultValue={localValue}
+                    onChange={handleChangeSelect}
+                    sx={{
+                      display: "block",
+                      margin: ".5rem 0",
+                      color: "white",
+                    }}
+                  >
+                    <MenuItem value={1}>Manager</MenuItem>
+                    <MenuItem value={2}>Inventory</MenuItem>
+                    <MenuItem value={3}>Cashier</MenuItem>
+                    <MenuItem value={4}>Guard</MenuItem>
+                  </Select>
+                </FormControl>
+                <TextField
+                  variant="outlined"
+                  label="Password"
                   sx={{
                     display: "block",
                     margin: ".5rem 0",
-                    color: "white",
                   }}
-                  SelectProps={{
-                    renderValue: (value) => localValue,
-                  }}
-                >
-                  <MenuItem key={"1"} value={"1"}>
-                    Manager
-                  </MenuItem>
-                  <MenuItem key={"2"} value={"2"}>
-                    Inventory
-                  </MenuItem>
-                  <MenuItem key={"3"} value={"3"}>
-                    Cashier
-                  </MenuItem>
-                  <MenuItem key={"4"} value={"4"}>
-                    Guard
-                  </MenuItem>
-                </Select>
-              </FormControl>
-              <TextField
-                variant="outlined"
-                label="Password"
-                sx={{
-                  display: "block",
-                  margin: ".5rem 0",
-                }}
-                type="password"
-                name="password"
-                onChange={handleChange}
-                value={user.password}
-                inputProps={{ style: { color: "white" } }}
-                InputLabelProps={{ style: { color: "white" } }}
-              />
+                  type="password"
+                  name="password"
+                  onChange={handleChange}
+                  value={usuario.password}
+                  inputProps={{ style: { color: "white" } }}
+                  InputLabelProps={{ style: { color: "white" } }}
+                />
 
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                disabled={
-                  !user.usuario || !user.nombre || !user.role || !user.password
-                }
-              >
-                {loading ? (
-                  <CircularProgress color="inherit" size={25} />
-                ) : (
-                  "Save"
-                )}
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  disabled={
+                    !usuario.usuario ||
+                    !usuario.nombre ||
+                    !usuario.role ||
+                    !usuario.password
+                  }
+                >
+                  {loading ? (
+                    <CircularProgress color="inherit" size={25} />
+                  ) : (
+                    "Save"
+                  )}
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
+        </Grid>
       </Grid>
-    </Grid>
+    </Container>
   );
 };
 

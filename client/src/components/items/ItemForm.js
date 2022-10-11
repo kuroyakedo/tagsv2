@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import Container from "../../containers/Container";
 import {
   Button,
   Card,
@@ -102,109 +103,110 @@ const ItemForm = () => {
   };
 
   return (
-    <Grid
-      container
-      alignItems="center"
-      direction="column"
-      justifyContent="center"
-    >
-      <Grid item xs={3}>
-        <Card
-          sx={{ mt: 5 }}
-          style={{
-            backgroundColor: "#1E272E",
-            padding: "1rem",
-          }}
-        >
-          <Typography variant="h5" textAlign="center" color="white">
-            {editing ? "Update Item" : "Create Item"}
-          </Typography>
-          <CardContent>
-            <TextField
-              variant="outlined"
-              label="Name"
-              sx={{
-                display: "block",
-                margin: ".5rem 0",
-              }}
-              name="nombre"
-              onChange={handleChange}
-              value={item.nombre}
-              inputProps={{ style: { color: "white" } }}
-              InputLabelProps={{ style: { color: "white" } }}
-            />
-            <TextField
-              variant="outlined"
-              label="UPC"
-              sx={{
-                display: "block",
-                margin: ".5rem 0",
-              }}
-              name="upc"
-              onChange={handleChange}
-              value={item.upc}
-              inputProps={{ style: { color: "white" } }}
-              InputLabelProps={{ style: { color: "white" } }}
-            />
-            <TextField
-              variant="outlined"
-              label="Cost"
-              sx={{
-                display: "block",
-                margin: ".5rem 0",
-              }}
-              type="number"
-              name="costo"
-              onChange={handleChange}
-              value={item.costo}
-              inputProps={{ style: { color: "white" } }}
-              InputLabelProps={{ style: { color: "white" } }}
-            />
-            <TextField
-              variant="outlined"
-              label="Description"
-              sx={{
-                display: "block",
-                margin: ".5rem 0",
-              }}
-              name="descripcion"
-              onChange={handleChange}
-              value={item.descripcion}
-              inputProps={{ style: { color: "white" } }}
-              InputLabelProps={{ style: { color: "white" } }}
-            />
+    <Container>
+      <Grid
+        container
+        alignItems="center"
+        direction="column"
+        justifyContent="center"
+      >
+        <Grid item xs={3}>
+          <Card
+            sx={{ mt: 5 }}
+            style={{
+              backgroundColor: "#1E272E",
+              padding: "1rem",
+            }}
+          >
+            <Typography variant="h5" textAlign="center" color="white">
+              {editing ? "Update Item" : "Create Item"}
+            </Typography>
+            <CardContent>
+              <TextField
+                variant="outlined"
+                label="Name"
+                sx={{
+                  display: "block",
+                  margin: ".5rem 0",
+                }}
+                name="nombre"
+                onChange={handleChange}
+                value={item.nombre}
+                inputProps={{ style: { color: "white" } }}
+                InputLabelProps={{ style: { color: "white" } }}
+              />
+              <TextField
+                variant="outlined"
+                label="UPC"
+                sx={{
+                  display: "block",
+                  margin: ".5rem 0",
+                }}
+                name="upc"
+                onChange={handleChange}
+                value={item.upc}
+                inputProps={{ style: { color: "white" } }}
+                InputLabelProps={{ style: { color: "white" } }}
+              />
+              <TextField
+                variant="outlined"
+                label="Cost"
+                sx={{
+                  display: "block",
+                  margin: ".5rem 0",
+                }}
+                type="number"
+                name="costo"
+                onChange={handleChange}
+                value={item.costo}
+                inputProps={{ style: { color: "white" } }}
+                InputLabelProps={{ style: { color: "white" } }}
+              />
+              <TextField
+                variant="outlined"
+                label="Description"
+                sx={{
+                  display: "block",
+                  margin: ".5rem 0",
+                }}
+                name="descripcion"
+                onChange={handleChange}
+                value={item.descripcion}
+                inputProps={{ style: { color: "white" } }}
+                InputLabelProps={{ style: { color: "white" } }}
+              />
 
-            <div>
-              <div className="col-10">
-                <input
-                  id="fileinput"
-                  onChange={selectedHandler}
-                  className="form-control"
-                  type="file"
-                />
+              <div>
+                <div className="col-10">
+                  <input
+                    id="fileinput"
+                    onChange={selectedHandler}
+                    className="form-control"
+                    type="file"
+                  />
+                </div>
               </div>
-              
-            </div>
 
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              disabled={
-                !item.nombre || !item.upc || !item.costo || !item.descripcion
-              }
-              onClick={handleSubmit}
-            >
-              {loading ? (
-                <CircularProgress color="inherit" size={25} />
-              ) : (
-                "Save"
-              )}
-            </Button>
-          </CardContent>
-        </Card>
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                disabled={
+                  !item.nombre || !item.upc || !item.costo || !item.descripcion
+                }
+                onClick={handleSubmit}
+              >
+                {loading ? (
+                  <CircularProgress color="inherit" size={25} />
+                ) : (
+                  "Save"
+                )}
+              </Button>
+            </CardContent>
+          </Card>
+        </Grid>
       </Grid>
-    </Grid>
+    </Container>
   );
 };
 
