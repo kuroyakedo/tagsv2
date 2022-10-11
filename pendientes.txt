@@ -37,6 +37,6 @@ PUERTA
 
 [x]LOGIN
 [x]SESION
-[]LOGOUT
+[X]LOGOUT
 
 []Refactorización

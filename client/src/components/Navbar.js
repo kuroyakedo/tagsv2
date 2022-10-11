@@ -10,15 +10,109 @@ import { useNavigate } from "react-router-dom";
 
 export default function Navbar() {
   const logout = useLogout();
+<<<<<<< HEAD
 
   const { auth } = useAuth();
 
+=======
+  /*const signOut = async () => {
+    await logout();
+    navigate("/login");
+  };*/
+  const { auth } = useAuth();
+  /*useEffect(() => {
+    (async () => {
+      if (user.loggedIn) {
+        // loadLinks(user.role);
+      }
+    })();
+  }, [user.loggedIn]);*/
+
+>>>>>>> 432e7a455084ff1949e2da3d07e615530705aa81
   const navigate = useNavigate();
   const handleClick = async () => {
     await logout();
     navigate("/login");
   };
+<<<<<<< HEAD
   //backgroundColor: "#388e3c"
+=======
+  /*
+   {user.loggedIn && user.role === 1 ? (
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                <Link
+                  to="/users"
+                  style={{ textDecoration: "none", color: "#eee" }}
+                >
+                  Users
+                </Link>
+              </Typography>
+            ) : (
+              ""
+            )}
+            {user.loggedIn && (user.role === 1 || user.role === 2) ? (
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                <Link
+                  to="/items"
+                  style={{ textDecoration: "none", color: "#eee" }}
+                >
+                  Items
+                </Link>
+              </Typography>
+            ) : (
+              ""
+            )}
+            {user.loggedIn && (user.role === 1 || user.role === 2) ? (
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                <Link
+                  to="/inventory"
+                  style={{ textDecoration: "none", color: "#eee" }}
+                >
+                  Inventory
+                </Link>
+              </Typography>
+            ) : (
+              ""
+            )}
+            {user.loggedIn && (user.role === 1 || user.role === 3) ? (
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                <Link
+                  to="/cashier"
+                  style={{ textDecoration: "none", color: "#eee" }}
+                >
+                  Cashier
+                </Link>
+              </Typography>
+            ) : (
+              ""
+            )}
+            {user.loggedIn && (user.role === 1 || user.role === 4) ? (
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                <Link
+                  to="/guards"
+                  style={{ textDecoration: "none", color: "#eee" }}
+                >
+                  Guards
+                </Link>
+              </Typography>
+            ) : (
+              ""
+            )}
+            {user.loggedIn ? (
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                <Link
+                  to=""
+                  onClick={handleClick}
+                  style={{ textDecoration: "none", color: "#eee" }}
+                >
+                  Log Out
+                </Link>
+              </Typography>
+            ) : (
+              ""
+            )}
+*/
+>>>>>>> 432e7a455084ff1949e2da3d07e615530705aa81
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -78,7 +172,11 @@ export default function Navbar() {
             {auth.role === 1 || auth.role === 4 ? (
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                 <Link
+<<<<<<< HEAD
                   to="/guard"
+=======
+                  to="/guards"
+>>>>>>> 432e7a455084ff1949e2da3d07e615530705aa81
                   style={{ textDecoration: "none", color: "#eee" }}
                 >
                   Guards
