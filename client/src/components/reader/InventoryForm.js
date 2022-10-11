@@ -6,6 +6,11 @@ import {
   Grid,
   TextField,
   Typography,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
 } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
 import Container from "../../containers/Container";
@@ -37,79 +42,87 @@ const InventoryForm = () => {
     setItems((items) => [...items, nuevoItem]);
     setCodigo({ ...codigo, rfid: "" });
   };
+
   return (
     <Container>
-      <Grid
-        container
-        alignItems="center"
-        direction="column"
-        justifyContent="center"
-      >
+      <Grid alignItems="" direction="column" justifyContent="center">
         <Grid item xs={3}>
           <Card
             sx={{ mt: 5 }}
             style={{
-              backgroundColor: "#1E272E",
               padding: "1rem",
             }}
           >
-            <Typography variant="h5" textAlign="center" color="white">
+            <Typography variant="h5" textAlign="center">
               Inventory
             </Typography>
-            <CardContent>
-              <TextField
-                label="Codigo"
-                sx={{
-                  display: "block",
-                  margin: ".5rem 0",
-                }}
-                name="codigo"
-                value={codigo.rfid}
-                onChange={handleChange}
-                inputProps={{ style: { color: "white" } }}
-                InputLabelProps={{ style: { color: "white" } }}
-              />
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                disabled={!codigo}
-                onClick={handleSubmit}
-              >
-                Save
-              </Button>
+            <CardContent
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
+              <div>
+                <TextField
+                  label="Codigo"
+                  sx={{
+                    display: "block",
+                    margin: ".5rem 0",
+                  }}
+                  name="codigo"
+                  value={codigo.rfid}
+                  onChange={handleChange}
+                />
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  disabled={!codigo}
+                  onClick={handleSubmit}
+                >
+                  Save
+                </Button>
+              </div>
+              <div>
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Item</TableCell>
+                      <TableCell>Imagen</TableCell>
+                      <TableCell>Descripcion</TableCell>
+                      <TableCell>Costo</TableCell>
+                      <TableCell>Total</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {items.map((i) => (
+                      <TableRow
+                        key={uuidv4()}
+                        sx={{
+                          "&:last-child td, &:last-child th": { border: 0 },
+                        }}
+                      >
+                        <TableCell>{i.nombre}</TableCell>
+                        <TableCell>
+                          <img
+                            src={"http://localhost:3001/" + i.rutaimagen}
+                            alt="TEST"
+                            width="110"
+                            height="90"
+                          ></img>
+                        </TableCell>
+                        <TableCell>{i.descripcion}</TableCell>
+                        <TableCell>{i.costo}</TableCell>
+                        <TableCell>{i.total}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+              <div></div>
             </CardContent>
           </Card>
         </Grid>
-        <table>
-          <thead>
-            <tr>
-              <th>Item</th>
-              <th>Imagen</th>
-              <th>Descripcion</th>
-              <th>Costo</th>
-              <th>Total</th>
-            </tr>
-          </thead>
-          <tbody>
-            {items.map((i) => (
-              <tr key={uuidv4()}>
-                <td>{i.nombre}</td>
-                <td>
-                  <img
-                    src={"http://localhost:3001/" + i.rutaimagen}
-                    alt="TEST"
-                    width="100"
-                    height="150"
-                  ></img>
-                </td>
-                <td>{i.descripcion}</td>
-                <td>{i.costo}</td>
-                <td>{i.total}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
       </Grid>
     </Container>
   );

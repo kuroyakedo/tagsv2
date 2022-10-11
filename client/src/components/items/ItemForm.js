@@ -114,11 +114,10 @@ const ItemForm = () => {
           <Card
             sx={{ mt: 5 }}
             style={{
-              backgroundColor: "#1E272E",
               padding: "1rem",
             }}
           >
-            <Typography variant="h5" textAlign="center" color="white">
+            <Typography variant="h5" textAlign="center">
               {editing ? "Update Item" : "Create Item"}
             </Typography>
             <CardContent>
@@ -132,8 +131,6 @@ const ItemForm = () => {
                 name="nombre"
                 onChange={handleChange}
                 value={item.nombre}
-                inputProps={{ style: { color: "white" } }}
-                InputLabelProps={{ style: { color: "white" } }}
               />
               <TextField
                 variant="outlined"
@@ -145,8 +142,6 @@ const ItemForm = () => {
                 name="upc"
                 onChange={handleChange}
                 value={item.upc}
-                inputProps={{ style: { color: "white" } }}
-                InputLabelProps={{ style: { color: "white" } }}
               />
               <TextField
                 variant="outlined"
@@ -159,8 +154,6 @@ const ItemForm = () => {
                 name="costo"
                 onChange={handleChange}
                 value={item.costo}
-                inputProps={{ style: { color: "white" } }}
-                InputLabelProps={{ style: { color: "white" } }}
               />
               <TextField
                 variant="outlined"
@@ -172,19 +165,15 @@ const ItemForm = () => {
                 name="descripcion"
                 onChange={handleChange}
                 value={item.descripcion}
-                inputProps={{ style: { color: "white" } }}
-                InputLabelProps={{ style: { color: "white" } }}
               />
 
               <div>
-                <div className="col-10">
-                  <input
-                    id="fileinput"
-                    onChange={selectedHandler}
-                    className="form-control"
-                    type="file"
-                  />
-                </div>
+                <input
+                  id="fileinput"
+                  onChange={selectedHandler}
+                  className="form-control"
+                  type="file"
+                />
               </div>
 
               <Button
@@ -195,6 +184,9 @@ const ItemForm = () => {
                   !item.nombre || !item.upc || !item.costo || !item.descripcion
                 }
                 onClick={handleSubmit}
+                style={{
+                  marginTop: "1rem",
+                }}
               >
                 {loading ? (
                   <CircularProgress color="inherit" size={25} />

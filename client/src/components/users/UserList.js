@@ -36,8 +36,17 @@ const UserList = () => {
         justifyContent="space-between"
         alignItems="flex-end"
         spacing={12}
+        style={{
+          paddingBottom: "1rem",
+        }}
       >
-        <h1>Users</h1>
+        <h1
+          style={{
+            color: "white",
+          }}
+        >
+          Users
+        </h1>
         <Button
           variant="contained"
           color="primary"
@@ -52,7 +61,6 @@ const UserList = () => {
           key={u.id}
           style={{
             marginBottom: ".7rem",
-            backgroundColor: "#1e272e",
           }}
         >
           <CardContent
@@ -61,11 +69,7 @@ const UserList = () => {
               justifyContent: "space-between",
             }}
           >
-            <div
-              style={{
-                color: "white",
-              }}
-            >
+            <div>
               <Typography>{u.nombre}</Typography>
               <Typography>{u.usuario}</Typography>
             </div>

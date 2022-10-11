@@ -8,6 +8,8 @@ import {
   TextField,
   Typography,
   CircularProgress,
+  Container,
+  Card,
 } from "@mui/material";
 
 const Login = () => {
@@ -45,58 +47,68 @@ const Login = () => {
   };
 
   return (
-    <Grid
-      container
-      alignItems="center"
-      direction="column"
-      justifyContent="center"
-    >
-      <Typography variant="h5" textAlign="center" color="white">
-        Log in
-      </Typography>
-      <CardContent>
-        <form>
-          <TextField
-            variant="outlined"
-            label="User"
-            sx={{
-              display: "block",
-              margin: ".5rem 0",
-            }}
-            name="usuario"
-            onChange={handleChange}
-            value={usuario.usuario}
-            inputProps={{ style: { color: "white" } }}
-            InputLabelProps={{ style: { color: "white" } }}
-            placeholder="Enter username"
-          />
-          <TextField
-            type="password"
-            variant="outlined"
-            label="Password"
-            sx={{
-              display: "block",
-              margin: ".5rem 0",
-            }}
-            name="password"
-            onChange={handleChange}
-            value={usuario.password}
-            inputProps={{ style: { color: "white" } }}
-            InputLabelProps={{ style: { color: "white" } }}
-            placeholder="Enter password"
-          />
-        </form>
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          disabled={!usuario.usuario || !usuario.password}
-          onClick={handleSubmit}
+    <Container>
+      <Grid
+        container
+        alignItems="center"
+        direction="column"
+        justifyContent="center"
+      >
+        <Card
+          sx={{ mt: 5 }}
+          style={{
+            backgroundColor: "white",
+            padding: "1rem",
+          }}
         >
-          {loading ? <CircularProgress color="inherit" size={25} /> : "Log in"}
-        </Button>
-      </CardContent>
-    </Grid>
+          <Typography variant="h5" textAlign="center">
+            Log in
+          </Typography>
+          <CardContent>
+            <form>
+              <TextField
+                variant="outlined"
+                label="User"
+                sx={{
+                  display: "block",
+                  margin: ".5rem 0",
+                }}
+                name="usuario"
+                onChange={handleChange}
+                value={usuario.usuario}
+                placeholder="Enter username"
+              />
+              <TextField
+                type="password"
+                variant="outlined"
+                label="Password"
+                sx={{
+                  display: "block",
+                  margin: ".5rem 0",
+                }}
+                name="password"
+                onChange={handleChange}
+                value={usuario.password}
+                placeholder="Enter password"
+              />
+            </form>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              disabled={!usuario.usuario || !usuario.password}
+              onClick={handleSubmit}
+            >
+              {loading ? (
+                <CircularProgress color="inherit" size={25} />
+              ) : (
+                "Log in"
+              )}
+            </Button>
+          </CardContent>
+        </Card>
+      </Grid>
+    </Container>
   );
 };
 

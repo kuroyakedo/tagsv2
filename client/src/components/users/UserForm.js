@@ -104,11 +104,11 @@ const UserForm = () => {
           <Card
             sx={{ mt: 5 }}
             style={{
-              backgroundColor: "#1E272E",
+              backgroundColor: "",
               padding: "1rem",
             }}
           >
-            <Typography variant="h5" textAlign="center" color="white">
+            <Typography variant="h5" textAlign="center">
               {editing ? "Update User" : "Create User"}
             </Typography>
             <CardContent>
@@ -123,8 +123,6 @@ const UserForm = () => {
                   name="usuario"
                   onChange={handleChange}
                   value={usuario.usuario}
-                  inputProps={{ style: { color: "white" } }}
-                  InputLabelProps={{ style: { color: "white" } }}
                 />
                 <TextField
                   variant="outlined"
@@ -136,14 +134,11 @@ const UserForm = () => {
                   name="nombre"
                   onChange={handleChange}
                   value={usuario.nombre}
-                  inputProps={{ style: { color: "white" } }}
-                  InputLabelProps={{ style: { color: "white" } }}
                 />
                 <FormControl
                   sx={{
                     display: "block",
                     margin: ".5rem 0",
-                    color: "white",
                   }}
                 >
                   <InputLabel
@@ -151,13 +146,10 @@ const UserForm = () => {
                     sx={{
                       display: "block",
                       margin: ".5rem 0",
-                      color: "white",
                     }}
                   >
                     Role
                   </InputLabel>
-                  <p>{usuario.role}</p>
-                  <p>{localValue}</p>
                   <Select
                     name="Role"
                     label="Role"
@@ -167,7 +159,6 @@ const UserForm = () => {
                     sx={{
                       display: "block",
                       margin: ".5rem 0",
-                      color: "white",
                     }}
                   >
                     <MenuItem value={1}>Manager</MenuItem>
@@ -187,8 +178,6 @@ const UserForm = () => {
                   name="password"
                   onChange={handleChange}
                   value={usuario.password}
-                  inputProps={{ style: { color: "white" } }}
-                  InputLabelProps={{ style: { color: "white" } }}
                 />
 
                 <Button
@@ -201,6 +190,9 @@ const UserForm = () => {
                     !usuario.role ||
                     !usuario.password
                   }
+                  style={{
+                    marginTop: "1rem",
+                  }}
                 >
                   {loading ? (
                     <CircularProgress color="inherit" size={25} />

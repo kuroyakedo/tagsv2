@@ -39,8 +39,17 @@ const ItemsList = () => {
         justifyContent="space-between"
         alignItems="flex-end"
         spacing={12}
+        style={{
+          paddingBottom: "1rem",
+        }}
       >
-        <h1>Items</h1>
+        <h1
+          style={{
+            color: "white",
+          }}
+        >
+          Items catalog
+        </h1>
         <Button
           variant="contained"
           color="primary"
@@ -55,7 +64,6 @@ const ItemsList = () => {
           key={i.id}
           style={{
             marginBottom: ".7rem",
-            backgroundColor: "#1e272e",
           }}
         >
           <CardContent
@@ -64,21 +72,18 @@ const ItemsList = () => {
               justifyContent: "space-between",
             }}
           >
-            <div
-              style={{
-                color: "white",
-              }}
-            >
+            <div>
               <Typography>{i.nombre}</Typography>
               <Typography>{i.descripcion}</Typography>
-              <Typography>
-                <img
-                  src={"http://localhost:3001/" + i.rutaimagen}
-                  alt="TEST"
-                  width="500"
-                  height="400"
-                ></img>
-              </Typography>
+            </div>
+            <div>
+              {" "}
+              <img
+                src={"http://localhost:3001/" + i.rutaimagen}
+                alt="TEST"
+                width="110"
+                height="90"
+              />
             </div>
             <div>
               <Button
