@@ -83,7 +83,7 @@ const UserList = () => {
               </Button>
               <Button
                 variant="contained"
-                color="warning"
+                color="secondary"
                 onClick={() => handleDelete(u.id)}
                 style={{ marginLeft: ".5rem" }}
               >

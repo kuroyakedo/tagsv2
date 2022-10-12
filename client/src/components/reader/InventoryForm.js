@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  Button,
   Card,
   CardContent,
   Grid,
@@ -20,14 +19,16 @@ const InventoryForm = () => {
     rfid: "",
   });
   const [items, setItems] = useState([]);
-  const handleChange = (e) => {
+  /*const handleChange = (e) => {
     setCodigo({ ...codigo, rfid: e.target.value });
-  };
+  };*/
   const handleSubmit = async (event) => {
+    // setCodigo({ ...codigo, rfid: event.target.value });
+    console.log(event.target.value);
     const response = await fetch("http://localhost:3001/inventory", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(codigo),
+      body: JSON.stringify({ ...codigo, rfid: event.target.value }),
     });
     const data = await response.json();
     const nuevoItem = {
@@ -39,7 +40,7 @@ const InventoryForm = () => {
       descripcion: data.descripcion,
       rutaimagen: data.rutaimagen,
     };
-    setItems((items) => [...items, nuevoItem]);
+    setItems((items) => [nuevoItem, ...items]);
     setCodigo({ ...codigo, rfid: "" });
   };
 
@@ -71,19 +72,10 @@ const InventoryForm = () => {
                   }}
                   name="codigo"
                   value={codigo.rfid}
-                  onChange={handleChange}
+                  onChange={handleSubmit}
                 />
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="primary"
-                  disabled={!codigo}
-                  onClick={handleSubmit}
-                >
-                  Save
-                </Button>
               </div>
-              <div>
+              <div className="tabla">
                 <Table>
                   <TableHead>
                     <TableRow>
@@ -107,8 +99,8 @@ const InventoryForm = () => {
                           <img
                             src={"http://localhost:3001/" + i.rutaimagen}
                             alt="TEST"
-                            width="110"
-                            height="90"
+                            width="auto"
+                            height="100"
                           ></img>
                         </TableCell>
                         <TableCell>{i.descripcion}</TableCell>

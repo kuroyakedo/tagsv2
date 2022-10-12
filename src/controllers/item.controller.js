@@ -96,12 +96,9 @@ const modifyItem = async (req, res, next) => {
 const itemsRfid = async (req, res, next) => {
   try {
     const { id } = req.params;
-    let epc = epcTds.valueOf(id);
-    let upc = epc.getGtin();
-    console.log(upc);
     const result = await pool.query(
       "SELECT nombre,upc,costo,descripcion,rutaimagen FROM catalogo WHERE upc=$1",
-      [upc]
+      [id]
     );
     if (result.rows.length === 0)
       return res.json({ message: "Item not found" });

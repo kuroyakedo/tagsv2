@@ -75,14 +75,15 @@ const ItemsList = () => {
             <div>
               <Typography>{i.nombre}</Typography>
               <Typography>{i.descripcion}</Typography>
+              <Typography>${i.costo}</Typography>
             </div>
             <div>
               {" "}
               <img
                 src={"http://localhost:3001/" + i.rutaimagen}
                 alt="TEST"
-                width="110"
-                height="90"
+                width="auto"
+                height="100"
               />
             </div>
             <div>
@@ -95,7 +96,7 @@ const ItemsList = () => {
               </Button>
               <Button
                 variant="contained"
-                color="warning"
+                color="secondary"
                 onClick={() => handleDelete(i.id)}
                 style={{ marginLeft: ".5rem" }}
               >

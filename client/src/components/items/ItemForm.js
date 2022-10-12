@@ -17,6 +17,7 @@ const ItemForm = () => {
     upc: "",
     costo: 0,
     descripcion: "",
+    rutaimagen: "",
   });
   const [loading, setLoading] = useState(false);
   const [editing, setEditing] = useState(false);
@@ -37,6 +38,7 @@ const ItemForm = () => {
       upc: data.upc,
       costo: data.costo,
       descripcion: data.descripcion,
+      rutaimagen: data.rutaimagen,
     });
     setEditing(true);
   };
@@ -166,6 +168,16 @@ const ItemForm = () => {
                 onChange={handleChange}
                 value={item.descripcion}
               />
+
+              <div>
+                {" "}
+                <img
+                  src={"http://localhost:3001/" + item.rutaimagen}
+                  alt="TEST"
+                  width="auto"
+                  height="220"
+                />
+              </div>
 
               <div>
                 <input
