@@ -40,3 +40,11 @@ PUERTA
 [X]LOGOUT
 
 []Refactorización
+
+/*
+DB_USER=postgres
+DB_PORT=5433
+DB_PASSWORD=123456
+DB_HOST=localhost
+DB_NAME=tags
+*/
