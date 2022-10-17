@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node src/index.js",
-    "heroku-postbuild": "cd client && npm install && npm run build",
-    "dev": "nodemon src/index.js"
+    "dev": "nodemon src/index.js --ignore client",
+    "build": "npm run build --prefix client",
+    "start": "node src/index.js"
   },
   "repository": {
     "type": "git",
