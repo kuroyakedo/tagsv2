@@ -9,9 +9,7 @@ const GuardForm = () => {
 
   const handleSubmit = async (event) => {
     setCodigo(event.target.value);
-    const res = await fetch(
-      "http://localhost:3001/guard/" + event.target.value
-    );
+    const res = await fetch("/guard/" + event.target.value);
     const data = await res.json();
     if (data.id === 0) {
       loadItem(data.upc);
@@ -21,7 +19,7 @@ const GuardForm = () => {
     }
   };
   const loadItem = async (upc) => {
-    const res = await fetch("http://localhost:3001/itemsRfid/" + upc);
+    const res = await fetch("/itemsRfid/" + upc);
     const data = await res.json();
     console.log(data);
     setItem({
@@ -65,7 +63,7 @@ const GuardForm = () => {
               <div>
                 {item !== undefined ? (
                   <img
-                    src={"http://localhost:3001/" + item.rutaimagen}
+                    src={"/" + item.rutaimagen}
                     alt="TEST"
                     width="auto"
                     height="500"

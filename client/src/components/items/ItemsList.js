@@ -12,14 +12,14 @@ const ItemsList = () => {
   const navigate = useNavigate();
 
   const loadItems = async () => {
-    const response = await fetch("http://localhost:3001/items");
+    const response = await fetch("/items");
     const data = await response.json();
     setItems(data);
   };
 
   const handleDelete = async (id) => {
     try {
-      await fetch(`http://localhost:3001/items/${id}`, {
+      await fetch(`/items/${id}`, {
         method: "DELETE",
       });
       setItems(items.filter((item) => item.id !== id));
@@ -80,7 +80,7 @@ const ItemsList = () => {
             <div>
               {" "}
               <img
-                src={"http://localhost:3001/" + i.rutaimagen}
+                src={"/" + i.rutaimagen}
                 alt="TEST"
                 width="auto"
                 height="100"
