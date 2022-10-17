@@ -25,7 +25,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     setLoading(true);
-    const response = await fetch("/login", {
+    const response = await fetch("http://localhost:3001/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(usuario),

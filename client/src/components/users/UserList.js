@@ -9,14 +9,14 @@ const UserList = () => {
   const navigate = useNavigate();
 
   const loadUsers = async () => {
-    const response = await fetch("/users");
+    const response = await fetch("http://localhost:3001/users");
     const data = await response.json();
     setUsers(data);
   };
 
   const handleDelete = async (id) => {
     try {
-      await fetch(`/users/${id}`, {
+      await fetch(`http://localhost:3001/users/${id}`, {
         method: "DELETE",
       });
       setUsers(users.filter((task) => task.id !== id));

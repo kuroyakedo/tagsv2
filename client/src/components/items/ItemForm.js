@@ -31,7 +31,7 @@ const ItemForm = () => {
   }, [params.id]);
 
   const loadItem = async (id) => {
-    const res = await fetch("/items/" + id);
+    const res = await fetch("http://localhost:3001/items/" + id);
     const data = await res.json();
     setItem({
       nombre: data.nombre,
@@ -47,15 +47,18 @@ const ItemForm = () => {
     setLoading(true);
     try {
       if (editing) {
-        const response = await fetch("/items/" + params.id, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(item),
-        });
+        const response = await fetch(
+          "http://localhost:3001/items/" + params.id,
+          {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(item),
+          }
+        );
         const data = await response.json();
         sendHandler(data.id);
       } else {
-        const response = await fetch("/items", {
+        const response = await fetch("http://localhost:3001/items", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(item),
@@ -87,7 +90,7 @@ const ItemForm = () => {
       formdata.append("image", file);
       //formdata.append('id', id)
       console.log(file);
-      fetch("/itemImage/" + id, {
+      fetch("http://localhost:3001/itemImage/" + id, {
         method: "PUT",
         body: formdata,
       })
@@ -169,7 +172,7 @@ const ItemForm = () => {
               <div>
                 {" "}
                 <img
-                  src={"/" + item.rutaimagen}
+                  src={"http://localhost:3001/" + item.rutaimagen}
                   alt="TEST"
                   width="auto"
                   height="220"

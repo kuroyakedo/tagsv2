@@ -25,7 +25,7 @@ const InventoryForm = () => {
   const handleSubmit = async (event) => {
     // setCodigo({ ...codigo, rfid: event.target.value });
     console.log(event.target.value);
-    const response = await fetch("/inventory", {
+    const response = await fetch("http://localhost:3001/inventory", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ ...codigo, rfid: event.target.value }),
@@ -97,7 +97,7 @@ const InventoryForm = () => {
                         <TableCell>{i.nombre}</TableCell>
                         <TableCell>
                           <img
-                            src={"/" + i.rutaimagen}
+                            src={"http://localhost:3001/" + i.rutaimagen}
                             alt="TEST"
                             width="auto"
                             height="100"

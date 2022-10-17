@@ -41,7 +41,7 @@ const UserForm = () => {
   const params = useParams();
 
   const loadUser = async (id) => {
-    const res = await fetch("/users/" + id);
+    const res = await fetch("http://localhost:3001/users/" + id);
     const data = await res.json();
     setUsuario({
       usuario: data.usuario,
@@ -63,14 +63,17 @@ const UserForm = () => {
     setLoading(true);
     try {
       if (editing) {
-        const response = await fetch("/users/" + params.id, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(usuario),
-        });
+        const response = await fetch(
+          "http://localhost:3001/users/" + params.id,
+          {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(usuario),
+          }
+        );
         await response.json();
       } else {
-        const response = await fetch("/users", {
+        const response = await fetch("http://localhost:3001/users", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(usuario),

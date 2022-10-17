@@ -23,7 +23,7 @@ const CashierForm = () => {
     setCodigo({ ...codigo, rfid: e.target.value });
   };*/
   const handleSubmit = async (event) => {
-    const response = await fetch("/cashier", {
+    const response = await fetch("http://localhost:3001/cashier", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ ...codigo, rfid: event.target.value }),
@@ -95,7 +95,7 @@ const CashierForm = () => {
                         <TableCell>{i.nombre}</TableCell>
                         <TableCell>
                           <img
-                            src={"/" + i.rutaimagen}
+                            src={"http://localhost:3001/" + i.rutaimagen}
                             alt="TEST"
                             width="auto"
                             height="100"

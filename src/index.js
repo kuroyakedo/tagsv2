@@ -15,14 +15,14 @@ require("dotenv").config();
 
 app.use(
   cors({
-    origin: express.static("./client/public"),
+    origin: "http://localhost:3000",
     credentials: true,
   })
 );
-app.use(express.static(path.join(__dirname, "client/build")));
-if (process.env.NODE_ENV === "production") {
+//app.use(express.static(path.join(__dirname, "client/build")));
+/*if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "client/build")));
-}
+}*/
 
 app.use(morgan("dev"));
 app.use(express.json());
@@ -56,4 +56,4 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(process.env.PORT);
-console.log("SERVER RUNNING ON 5000");
+console.log("SERVER RUNNING ON " + process.env.PORT);

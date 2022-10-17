@@ -4,11 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development nodemon src/index.js --ignore client",
-    "start": "cross-env NODE_ENV=production node scr/index.js",
-    "postinstall": "npm run build",
-    "build": "cross-env NODE_ENV=production webpack",
-    "server:dev": "webpack-dev-server"
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
   },
   "repository": {
     "type": "git",
@@ -38,12 +35,5 @@
     "react-images-upload": "^1.2.8",
     "styled-components": "^5.3.5",
     "url-loader": "^4.1.1"
-  },
-  "engines": {
-    "node": "16.13.0",
-    "npm": "8.1.0"
-  },
-  "devDependencies": {
-    "cross-env": "^7.0.3"
   }
 }
