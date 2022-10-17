@@ -15,10 +15,15 @@ require("dotenv").config();
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: express.static("./client/public"),
     credentials: true,
   })
 );
+app.use(express.static(path.join(__dirname, "client/build")));
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "client/build")));
+}
+
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(
