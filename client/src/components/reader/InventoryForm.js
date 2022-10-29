@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import {
   Card,
   CardContent,
@@ -19,18 +19,25 @@ const InventoryForm = () => {
     rfid: "",
   });
   const [items, setItems] = useState([]);
-  /*const handleChange = (e) => {
-    setCodigo({ ...codigo, rfid: e.target.value });
-  };*/
-  const handleSubmit = async (event) => {
-    // setCodigo({ ...codigo, rfid: event.target.value });
-    console.log(event.target.value);
-    const response = await fetch("http://localhost:3001/inventory", {
+ 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if(codigo.rfid!==''){handleSubmit()}
+    }, 750)
+
+    return () => clearTimeout(timer)
+  }, [codigo])
+
+  const handleSubmit = async () => {
+    // setCodigo({ ...codigo, rfid: event.target.value });    
+   const response = await fetch("http://localhost:3001/inventory", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...codigo, rfid: event.target.value }),
+      body: JSON.stringify(codigo),
     });
     const data = await response.json();
+    
+    if(data.id!==0){
     const nuevoItem = {
       id: data.idcatalogo,
       nombre: data.nombre,
@@ -40,7 +47,7 @@ const InventoryForm = () => {
       descripcion: data.descripcion,
       rutaimagen: data.rutaimagen,
     };
-    setItems((items) => [nuevoItem, ...items]);
+    setItems((items) => [nuevoItem, ...items]);}
     setCodigo({ ...codigo, rfid: "" });
   };
 
@@ -72,7 +79,8 @@ const InventoryForm = () => {
                   }}
                   name="codigo"
                   value={codigo.rfid}
-                  onChange={handleSubmit}
+                  onChange={e=>setCodigo({ ...codigo, rfid: e.target.value })}
+                  
                 />
               </div>
               <div className="tabla">

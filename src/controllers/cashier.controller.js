@@ -1,18 +1,20 @@
 const { nextTick } = require("process");
 const pool = require("../db");
-const epcTds = require("epc-tds");
+const {getUpc,getEpc} = require('../codigo')
 
-//30342E120C10529AC688C393
 const payment = async (req, res, next) => {
   const { rfid } = req.body;
-  let upc = epcTds.valueOf(rfid);
+  let upc=getUpc(rfid)
+  let epc=getEpc(rfid);
   try {
     const result = await pool.query(
       "UPDATE inventario AS i SET total=total-1 FROM catalogo AS c WHERE c.upc=$1 AND i.idcatalogo=c.id RETURNING *",
-      [upc.getGtin()]
+      [upc]
     );
-    const r = await saveRfidCode(rfid);
-    res.json(result.rows[0]);
+    const r = await saveRfidCode(epc);
+    if (result.rows.length === 0)
+    return res.json({ id:0,message: "Item not found" });
+    res.json(result.rows[0]);  
   } catch (err) {
     next(err);
     console.log(err);

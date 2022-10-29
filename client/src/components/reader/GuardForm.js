@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 //import { useNavigate } from "react-router-dom";
 import { Card, CardContent, Grid, TextField, Typography } from "@mui/material";
 import Container from "../../containers/Container";
@@ -6,11 +6,17 @@ import Container from "../../containers/Container";
 const GuardForm = () => {
   const [codigo, setCodigo] = useState("");
   const [item, setItem] = useState(undefined);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if(codigo!==''){handleSubmit()}
+    }, 750)
 
-  const handleSubmit = async (event) => {
-    setCodigo(event.target.value);
+    return () => clearTimeout(timer)
+  }, [codigo])
+
+  const handleSubmit = async () => {
     const res = await fetch(
-      "http://localhost:3001/guard/" + event.target.value
+      "http://localhost:3001/guard/" + codigo
     );
     const data = await res.json();
     if (data.id === 0) {
@@ -60,8 +66,8 @@ const GuardForm = () => {
                 }}
                 name="codigo"
                 value={codigo}
-                onChange={handleSubmit}
-              />
+                onChange={e=>setCodigo(e.target.value)}
+                />
               <div>
                 {item !== undefined ? (
                   <img

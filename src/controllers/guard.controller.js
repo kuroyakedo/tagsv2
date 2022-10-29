@@ -1,21 +1,21 @@
 const { nextTick } = require("process");
 const pool = require("../db");
-const epcTds = require("epc-tds");
+const {getEpc, getUpc} = require('../codigo')
 const { getItemUpc } = require("./item.controller");
 
-//30342E120C10529AC688C393
 const guard = async (req, res, next) => {
   try {
     const { id } = req.params;
-    let epc = epcTds.valueOf(id);
+    let epc=getEpc(id);
+    let upc=getUpc(id);
     const result = await pool.query("SELECT id FROM codigos WHERE rfid=$1", [
-      id,
+      epc,
     ]);
     if (result.rows.length === 0)
       return res.json({
         message: "Item not found",
         id: 0,
-        upc: epc.getGtin(),
+        upc: upc,
       });
     res.json(result.rows[0]);
   } catch (err) {

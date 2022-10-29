@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import {
   Card,
   CardContent,
@@ -19,16 +19,21 @@ const CashierForm = () => {
   const [codigo, setCodigo] = useState({
     rfid: "",
   });
-  /*const handleChange = (e) => {
-    setCodigo({ ...codigo, rfid: e.target.value });
-  };*/
-  const handleSubmit = async (event) => {
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if(codigo.rfid!==''){handleSubmit()}
+    }, 750)
+
+    return () => clearTimeout(timer)
+  }, [codigo])
+  const handleSubmit = async () => {
     const response = await fetch("http://localhost:3001/cashier", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...codigo, rfid: event.target.value }),
+      body: JSON.stringify(codigo),
     });
     const data = await response.json();
+    if(data.id!==0){
     const nuevoItem = {
       id: data.idcatalogo,
       nombre: data.nombre,
@@ -38,6 +43,7 @@ const CashierForm = () => {
       rutaimagen: data.rutaimagen,
     };
     setItems((items) => [nuevoItem, ...items]);
+  }
     setCodigo({ ...codigo, rfid: "" });
   };
   //GS1.GTIN ES EL UPC
@@ -70,7 +76,8 @@ const CashierForm = () => {
                   }}
                   name="codigo"
                   value={codigo.rfid}
-                  onChange={handleSubmit}
+                  onChange={e=>setCodigo({ ...codigo, rfid: e.target.value })}
+               
                 />
               </div>
 
@@ -114,6 +121,5 @@ const CashierForm = () => {
       </Grid>
     </Container>
   );
-};
-
+}
 export default CashierForm;
